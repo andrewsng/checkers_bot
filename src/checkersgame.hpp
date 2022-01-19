@@ -2,6 +2,7 @@
 #define CHECKERSGAME_HPP
 
 #include "board.hpp"
+#include "move.hpp"
 
 
 class CheckersGame {
