@@ -1,6 +1,7 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
+#include <vector>
 #include <string>
 
 
@@ -10,6 +11,10 @@ public:
 
     using Tile = std::string::size_type;
     Board() = default;
+    std::vector<Tile> getBlackPositions() const;
+    bool onEvenRow(Tile tile) const;
+    bool onLeftSide(Tile tile) const;
+    bool onRightSide(Tile tile) const;
 
 private:
 
