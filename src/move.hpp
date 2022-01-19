@@ -13,6 +13,8 @@ public:
     Move(Tile start, Tile end)
         :_startEnd(start, end)
     {}
+    Tile getStart() const { return _startEnd.first; }
+    Tile getEnd() const { return _startEnd.second; }
 
 private:
 

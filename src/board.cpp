@@ -13,13 +13,13 @@ vector<Board::Tile> Board::getBlackPositions() const {
 }
 
 bool Board::onEvenRow(Tile tile) const {
-    return true;
+    return (tile / 4) % 2 == 0;
 }
 
 bool Board::onLeftSide(Tile tile) const {
-    return true;
+    return tile % 8 == 0;
 }
 
 bool Board::onRightSide(Tile tile) const {
-    return true;
+    return tile % 8 == 7;
 }

@@ -10,5 +10,9 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "\n";
     auto moves = generateMoves(b, 1);
+    for (auto move : moves) {
+        std::cout << move.getStart() << " -> " << move.getEnd() << ", ";
+    }
+    std::cout << "\n";
     return 0;
 }
