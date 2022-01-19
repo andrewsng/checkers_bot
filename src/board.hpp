@@ -5,6 +5,8 @@
 #include <string>
 
 
+class Move;
+
 class Board {
 
 public:
@@ -20,11 +22,13 @@ public:
     bool isOccupied(Tile tile) const;
     bool isOutOfBounds(Tile tile) const;
     bool isOpponent(Tile tile, int player) const;
+    char symbolOn(Tile tile) const;
+    void updateBoard(Move move);
 
 private:
 
-    // std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
-    std::string _data{"Rbbb   r       r   rb         r "};
+    std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
+    // std::string _data{"Rbbb   r       r   rb         r "};
 
 };
 

@@ -38,7 +38,7 @@ void generateNextMove(const Board &board, int player, vector<Move> &moves,
             moves.push_back(Move{tile, *nextTile});
         } else if (auto nextJump = getNext(board, *nextTile, isUpward)) {
             if (board.isOpponent(*nextTile, player) && !board.isOccupied(*nextJump)) {
-                moves.push_back(Move{tile, *nextJump});
+                moves.push_back(Move{tile, *nextJump, *nextTile});
             }
         }
     }

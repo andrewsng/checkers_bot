@@ -9,6 +9,9 @@ class CheckersGame {
 
 public:
 
+    void printBoard() const;
+    void printRedMoves() const;
+    void printBlackMoves() const;
     void makeMove(Move move);
 
 private:

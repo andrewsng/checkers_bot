@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "move.hpp"
 using std::vector;
 
 vector<Board::Tile> Board::getRedPositions() const {
@@ -51,4 +52,17 @@ bool Board::isOpponent(Tile tile, int player) const {
     if (player == 1 && (_data[tile] == 'r' || _data[tile] == 'R'))
         return true;
     return false;
+}
+
+char Board::symbolOn(Tile tile) const {
+    return _data[tile];
+}
+
+void Board::updateBoard(Move move) {
+    auto &start = _data[move.getStart()];
+    _data[move.getEnd()] = start;
+    start = ' ';
+    if (move.isAJump()) {
+        _data[move.getCaptured()] = ' ';
+    }
 }
