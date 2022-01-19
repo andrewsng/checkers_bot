@@ -6,7 +6,7 @@
 #include <vector>
 
 
-std::vector<Move> generateMoves(Board board, int player);
+std::vector<Move> generateMoves(const Board &board, int player);
 
 
 #endif  // MOVEGEN_HPP
