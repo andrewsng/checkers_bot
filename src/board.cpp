@@ -33,8 +33,16 @@ bool Board::onRightSide(Tile tile) const {
     return tile % 8 == 7;
 }
 
+bool Board::isKing(Tile tile) const {
+    return _data[tile] == 'R' || _data[tile] == 'B';
+}
+
 bool Board::isOccupied(Tile tile) const {
     return _data[tile] != ' ';
+}
+
+bool Board::isOutOfBounds(Tile tile) const {
+    return tile >= _data.size();
 }
 
 bool Board::isOpponent(Tile tile, int player) const {

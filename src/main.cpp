@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[]) {
     Board b;
+    std::cout << "Black positions:\n";
     for (auto t : b.getBlackPositions()) {
         std::cout << t << ", ";
     }
@@ -13,7 +14,8 @@ int main(int argc, char *argv[]) {
     for (auto move : blackMoves) {
         std::cout << move.getStart() << " -> " << move.getEnd() << ", ";
     }
-    std::cout << "\n";
+    std::cout << "\n\n";
+    std::cout << "Red positions:\n";
     for (auto t : b.getRedPositions()) {
         std::cout << t << ", ";
     }

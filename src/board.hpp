@@ -16,12 +16,15 @@ public:
     bool onEvenRow(Tile tile) const;
     bool onLeftSide(Tile tile) const;
     bool onRightSide(Tile tile) const;
+    bool isKing(Tile tile) const;
     bool isOccupied(Tile tile) const;
+    bool isOutOfBounds(Tile tile) const;
     bool isOpponent(Tile tile, int player) const;
 
 private:
 
-    std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
+    // std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
+    std::string _data{"Rbbb   r       r   rb         r "};
 
 };
 
