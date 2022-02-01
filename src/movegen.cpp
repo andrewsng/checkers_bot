@@ -1,7 +1,8 @@
 #include "movegen.hpp"
 #include <optional>
-using std::vector;
+#include <functional>
 using std::optional;
+using std::vector;
 
 
 // Forward declarations
@@ -21,6 +22,10 @@ vector<Move> generateMoves(const Board &board, int player) {
         if (board.isKing(tile)) {
             generateLeftRight(board, player, moves, tile, isRed);
         }
+    }
+    auto isJump = [](const Move &move) { return move.isAJump(); };
+    if (std::find_if(moves.begin(), moves.end(), isJump) != moves.end()) {
+        moves.erase(std::remove_if(moves.begin(), moves.end(), std::not_fn(isJump)), moves.end());
     }
     return moves;
 }
