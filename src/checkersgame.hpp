@@ -12,11 +12,13 @@ public:
     void printBoard() const;
     void printRedMoves() const;
     void printBlackMoves() const;
-    void makeMove(Move move);
+    void changeTurn();
+    bool makeMove(Move move);
 
 private:
 
     Board _board{};
+    int _player{0};
 
 };
 

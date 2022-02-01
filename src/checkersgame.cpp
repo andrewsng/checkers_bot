@@ -32,6 +32,15 @@ void CheckersGame::printBlackMoves() const {
     }
 }
 
-void CheckersGame::makeMove(Move move) {
+void CheckersGame::changeTurn() {
+    _player = 1 - _player;
+}
+
+bool CheckersGame::makeMove(Move move) {
+    auto legalMoves = generateMoves(_board, _player);
+    if (std::find(legalMoves.begin(), legalMoves.end(), move) == legalMoves.end()) {
+        return false;
+    }
     _board.updateBoard(move);
+    return true;
 }
