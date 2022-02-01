@@ -353,3 +353,4 @@ MigrationBackup/
 # Personal
 build/
 */compile_flags.txt
+/SFML*/
