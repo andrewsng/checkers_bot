@@ -15,9 +15,9 @@ public:
     Board() = default;
     std::vector<Tile> getRedPositions() const;
     std::vector<Tile> getBlackPositions() const;
-    bool onEvenRow(Tile tile) const;
-    bool onLeftSide(Tile tile) const;
-    bool onRightSide(Tile tile) const;
+    static bool onEvenRow(Tile tile);
+    static bool onLeftSide(Tile tile);
+    static bool onRightSide(Tile tile);
     bool isKing(Tile tile) const;
     bool isOccupied(Tile tile) const;
     bool isOutOfBounds(Tile tile) const;

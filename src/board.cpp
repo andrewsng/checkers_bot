@@ -22,15 +22,15 @@ vector<Board::Tile> Board::getBlackPositions() const {
     return blackPositions;
 }
 
-bool Board::onEvenRow(Tile tile) const {
+bool Board::onEvenRow(Tile tile) {
     return (tile / 4) % 2 == 0;
 }
 
-bool Board::onLeftSide(Tile tile) const {
+bool Board::onLeftSide(Tile tile) {
     return tile % 8 == 0;
 }
 
-bool Board::onRightSide(Tile tile) const {
+bool Board::onRightSide(Tile tile) {
     return tile % 8 == 7;
 }
 
@@ -62,7 +62,7 @@ void Board::updateBoard(Move move) {
     auto &start = _data[move.getStart()];
     _data[move.getEnd()] = start;
     start = ' ';
-    if (move.isAJump()) {
-        _data[move.getCaptured()] = ' ';
+    if (auto captured = move.getCaptured()) {
+        _data[*captured] = ' ';
     }
 }

@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include <utility>
+#include <optional>
 
 
 class Move {
@@ -10,24 +11,23 @@ class Move {
 public:
 
     using Tile = Board::Tile;
-    Move(Tile start, Tile end)
-        :_start(start), _end(end)
-    {}
-    Move(Tile start, Tile jump, Tile captured)
-        :_start(start), _end(jump), _captured(captured)
-    {}
-    Tile getStart() const { return _start; }
-    Tile getEnd() const { return _end; }
-    Tile getCaptured() const { return _captured; }
-    bool isAJump() const { return _captured != 32; }
+    using Diff = Tile;
+    Move(Tile start, Tile end);
+    Tile getStart() const;
+    Tile getEnd() const;
+    bool isAJump() const;
+    std::optional<Move::Tile> getCaptured() const;
 
 private:
 
+    Diff tileDiff() const; 
+
     Tile _start;
     Tile _end;
-    Tile _captured{32};
 
 };
+
+bool operator==(const Move &lhs, const Move &rhs);
 
 
 #endif  // MOVE_HPP
