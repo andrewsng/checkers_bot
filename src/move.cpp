@@ -4,17 +4,9 @@ using std::optional;
 #include <cmath>
 
 
-Move::Move(Tile start, Tile end)
-    :_start(start), _end(end)
+Move::Move(Tile start, Tile end, int player)
+    :_start(start), _end(end), _player(player)
 {}
-
-Move::Tile Move::getStart() const {
-    return _start;
-}
-
-Move::Tile Move::getEnd() const {
-    return _end;
-}
 
 optional<Move::Tile> Move::getCaptured() const {
     if (!isAJump()) {

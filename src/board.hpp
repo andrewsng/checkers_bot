@@ -22,8 +22,10 @@ public:
     bool isOccupied(Tile tile) const;
     bool isOutOfBounds(Tile tile) const;
     bool isOpponent(Tile tile, int player) const;
+    bool isPromotionRow(Tile tile, int player) const;
+    bool isPromotion(const Move &move);
     char symbolOn(Tile tile) const;
-    void updateBoard(Move move);
+    void updateBoard(const Move &move);
 
 private:
 

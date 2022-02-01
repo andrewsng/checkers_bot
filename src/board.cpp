@@ -1,5 +1,7 @@
 #include "board.hpp"
 #include "move.hpp"
+#include <cctype>
+using std::toupper;
 using std::vector;
 
 vector<Board::Tile> Board::getRedPositions() const {
@@ -54,15 +56,33 @@ bool Board::isOpponent(Tile tile, int player) const {
     return false;
 }
 
+bool Board::isPromotionRow(Tile tile, int player) const {
+    if (player == 0) {
+        return (0 <= tile) && (tile <= 3);
+    }
+    if (player == 1) {
+        return (28 <= tile) && (tile <= 31);
+    }
+    return false;
+}
+
+bool Board::isPromotion(const Move &move) {
+    return !isKing(move.getStart()) && isPromotionRow(move.getEnd(), move.getPlayer());
+}
+
 char Board::symbolOn(Tile tile) const {
     return _data[tile];
 }
 
-void Board::updateBoard(Move move) {
+void Board::updateBoard(const Move &move) {
     auto &start = _data[move.getStart()];
-    _data[move.getEnd()] = start;
+    auto &end = _data[move.getEnd()];
+    end = start;
     start = ' ';
     if (auto captured = move.getCaptured()) {
         _data[*captured] = ' ';
+    }
+    if (isPromotion(move)) {
+        end = toupper(end);
     }
 }

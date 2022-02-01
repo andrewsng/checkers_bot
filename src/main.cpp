@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
             Move::Tile t0{};
             Move::Tile t1{};
             std::cin >> t0 >> t1;
-            if (game.makeMove(Move{t0, t1})) {
+            if (game.makeMove(Move{t0, t1, game.getTurn()})) {
                 game.changeTurn();
                 break;
             }

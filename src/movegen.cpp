@@ -35,10 +35,10 @@ void generateNextMove(const Board &board, int player, vector<Move> &moves,
                   Board::Tile tile, bool isUpward, decltype(getLeft) *getNext) {
     if (auto nextTile = getNext(board, tile, isUpward)) {
         if (!board.isOccupied(*nextTile)) {
-            moves.push_back(Move{tile, *nextTile});
+            moves.push_back(Move{tile, *nextTile, player});
         } else if (auto nextJump = getNext(board, *nextTile, isUpward)) {
             if (board.isOpponent(*nextTile, player) && !board.isOccupied(*nextJump)) {
-                moves.push_back(Move{tile, *nextJump});
+                moves.push_back(Move{tile, *nextJump, player});
             }
         }
     }

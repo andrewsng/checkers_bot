@@ -9,6 +9,7 @@ class CheckersGame {
 
 public:
 
+    int getTurn() const { return _player; }
     void printBoard() const;
     void printRedMoves() const;
     void printBlackMoves() const;

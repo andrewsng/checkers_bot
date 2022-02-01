@@ -12,10 +12,12 @@ public:
 
     using Tile = Board::Tile;
     using Diff = Tile;
-    Move(Tile start, Tile end);
-    Tile getStart() const;
-    Tile getEnd() const;
+    Move(Tile start, Tile end, int player);
+    Tile getStart() const { return _start; }
+    Tile getEnd() const { return _end; }
+    int getPlayer() const { return _player; }
     bool isAJump() const;
+    bool isAPromotion() const;
     std::optional<Move::Tile> getCaptured() const;
 
 private:
@@ -24,6 +26,7 @@ private:
 
     Tile _start;
     Tile _end;
+    int _player;
 
 };
 
