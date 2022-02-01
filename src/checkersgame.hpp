@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include "move.hpp"
+#include <optional>
 
 
 class CheckersGame {
@@ -14,7 +15,7 @@ public:
     void printRedMoves() const;
     void printBlackMoves() const;
     void changeTurn();
-    bool makeMove(Move move);
+    std::optional<bool> makeMove(Move move);
 
 private:
 

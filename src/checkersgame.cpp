@@ -1,6 +1,7 @@
 #include "checkersgame.hpp"
 #include "movegen.hpp"
 #include <iostream>
+using std::optional;
 
 
 void CheckersGame::printBoard() const {
@@ -36,11 +37,19 @@ void CheckersGame::changeTurn() {
     _player = 1 - _player;
 }
 
-bool CheckersGame::makeMove(Move move) {
+optional<bool> CheckersGame::makeMove(Move move) {
     auto legalMoves = generateMoves(_board, _player);
     if (std::find(legalMoves.begin(), legalMoves.end(), move) == legalMoves.end()) {
-        return false;
+        return {};
     }
     _board.updateBoard(move);
+    if (_board.isPromotion(move) || !move.isAJump()) {
+        return false;
+    }
+    auto continuedJumps = generateMoves(_board, _player);
+    if (std::find_if(continuedJumps.begin(), continuedJumps.end(),
+            [](const Move &nextMove) { return nextMove.isAJump(); }) == continuedJumps.end()) {
+        return false;
+    }
     return true;
 }
