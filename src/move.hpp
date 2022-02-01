@@ -17,7 +17,6 @@ public:
     Tile getEnd() const { return _end; }
     int getPlayer() const { return _player; }
     bool isAJump() const;
-    bool isAPromotion() const;
     std::optional<Move::Tile> getCaptured() const;
 
 private:
