@@ -5,11 +5,11 @@
 
 
 int main(int argc, char *argv[]) {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Checkers");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Checkers");
     sf::View view = window.getDefaultView();
     CheckersGame game{};
-    auto t0 = 0ull;
-    auto t1 = 0ull;
+    int t0 = 0;
+    int t1 = 0;
     while (window.isOpen()) {
         auto size = window.getSize();
         auto boardSize = std::min(size.x, size.y);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
                         t0 = t1;
                         t1 = (y * 8 + x) / 2;
 
-                        if (auto cont = game.makeMove(Move{t0, t1, game.getTurn()})) {
+                        if (auto cont = game.makeMove(Move(t0, t1, game.getTurn()))) {
                             game.printBoard();
                             std::cout << "\n";
                             game.setActiveTile(-1);

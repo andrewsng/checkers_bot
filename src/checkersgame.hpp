@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include "move.hpp"
+#include <vector>
 #include <optional>
 #include <SFML/Graphics.hpp>
 
@@ -16,6 +17,7 @@ public:
     void printRedMoves() const;
     void printBlackMoves() const;
     void drawBoard(sf::RenderWindow *window) const;
+    std::vector<Move> getLegalMoves() const;
     void setActiveTile(int tile);
     void changeTurn();
     std::optional<bool> makeMove(Move move);
@@ -23,8 +25,10 @@ public:
 private:
 
     Board _board{};
-    int _player{0};
+    int _player{1};
     int _active{-1};
+    std::vector<Move> _legalMoves{};
+    bool _legalMovesCached{false};
 
 };
 
