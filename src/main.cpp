@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
     CheckersGame game{};
     auto t0 = 0ull;
     auto t1 = 0ull;
-    int activeTile = -1;
     while (window.isOpen()) {
         auto size = window.getSize();
         auto boardSize = std::min(size.x, size.y);
@@ -41,42 +40,19 @@ int main(int argc, char *argv[]) {
                         if (auto cont = game.makeMove(Move{t0, t1, game.getTurn()})) {
                             game.printBoard();
                             std::cout << "\n";
+                            game.setActiveTile(-1);
                             if (!(*cont)) {
                                 game.changeTurn();
                             }
                         }
                         else {
-                            activeTile = t1;
+                            game.setActiveTile(t1);
                         }
                     }
                 }
             }
         }
-
-        window.clear(sf::Color::Black);
-
-        sf::RectangleShape rectangle(sf::Vector2f(boardSize, boardSize));
-        rectangle.setFillColor(sf::Color(240, 215, 180));
-        window.draw(rectangle);
-        for (int tile = 0; tile < 32; ++tile) {
-            sf::RectangleShape r(sf::Vector2f(boardSize / 8.0f, boardSize / 8.0f));
-            if (tile == activeTile) {
-                r.setFillColor(sf::Color(255, 0, 255));
-            }
-            else {
-                r.setFillColor(sf::Color(140, 70, 45));
-            }
-            int x = tile % 4;
-            int y = 7 - (tile / 4);
-            if (y % 2 == 0) {
-                r.move((x * boardSize / 4.0f) + boardSize / 8.0f, y * boardSize / 8.0f);
-            }
-            else {
-                r.move(x * boardSize / 4.0f, y * boardSize / 8.0f);
-            }
-            window.draw(r);
-        }
-        window.display();
+        game.drawBoard(&window);
     }
     return 0;
 }
