@@ -25,7 +25,7 @@ public:
 private:
 
     Board _board{};
-    int _player{1};
+    int _player{0};
     int _active{-1};
     std::vector<Move> _legalMoves{};
     bool _legalMovesCached{false};

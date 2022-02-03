@@ -31,11 +31,11 @@ public:
 
 private:
 
-    // std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
+    std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
     // std::string _data{"Rbbb   r       r   rb         r "};
     // std::string _data{"     bb     b b R   bb          "};
     // std::string _data{"          rr     r rb    rr     "};
-    std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
+    // std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
 
 };
 
