@@ -36,6 +36,14 @@ bool Board::onRightSide(Tile tile) {
     return tile % 8 == 7;
 }
 
+bool Board::isRed(Tile tile) const {
+    return _data[tile] == 'r' || _data[tile] == 'R';
+}
+
+bool Board::isBlack(Tile tile) const {
+    return _data[tile] == 'b' || _data[tile] == 'B';
+}
+
 bool Board::isKing(Tile tile) const {
     return _data[tile] == 'R' || _data[tile] == 'B';
 }

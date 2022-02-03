@@ -18,6 +18,8 @@ public:
     static bool onEvenRow(Tile tile);
     static bool onLeftSide(Tile tile);
     static bool onRightSide(Tile tile);
+    bool isRed(Tile tile) const;
+    bool isBlack(Tile tile) const;
     bool isKing(Tile tile) const;
     bool isOccupied(Tile tile) const;
     bool isOutOfBounds(Tile tile) const;
