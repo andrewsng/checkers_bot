@@ -64,28 +64,33 @@ void CheckersGame::drawBoard(sf::RenderWindow *window) const {
         auto [xOffset, yOffset] = coordsFromTile(tile, boardSize);
         sf::RectangleShape tileSquare(sf::Vector2f(boardSize / 8.0f, boardSize / 8.0f));
         if (tile == _active) {
-            tileSquare.setFillColor(sf::Color(255, 0, 255));
+            tileSquare.setFillColor(sf::Color(255, 240, 150));
         }
         else {
-            tileSquare.setFillColor(sf::Color(140, 70, 45));
+            tileSquare.setFillColor(sf::Color(180, 123, 95));
         }
         tileSquare.move(xOffset, yOffset);
         window->draw(tileSquare);
         if (_board.isOccupied(tile)) {
-            sf::CircleShape checker(boardSize / 16.0f);
+            float checkerWidth = boardSize / 16.0f;
+            float checkerOutlineThickness = checkerWidth / 4.0f;
+            sf::CircleShape checker(checkerWidth - checkerOutlineThickness);
+            checker.setOutlineThickness(checkerOutlineThickness);
             if (_board.isRed(tile)) {
-                checker.setFillColor(sf::Color(255, 0, 0));
+                checker.setFillColor(sf::Color(150, 25, 30));
+                checker.setOutlineColor(sf::Color(215, 15, 25));
             }
             else if (_board.isBlack(tile)) {
-                checker.setFillColor(sf::Color(0, 0, 0));
+                checker.setFillColor(sf::Color(15, 15, 15));
+                checker.setOutlineColor(sf::Color(40, 40, 40));
             }
-            checker.move(xOffset, yOffset);
+            checker.move(xOffset + checkerOutlineThickness, yOffset + checkerOutlineThickness);
             window->draw(checker);
         }
         if (_board.isKing(tile)) {
             float kingWidth = boardSize / 16.0f;
             sf::CircleShape king(boardSize / 16.0f / 2, 5);
-            king.setFillColor(sf::Color(255, 255, 0));
+            king.setFillColor(sf::Color(235, 190, 25));
             king.move(xOffset + (kingWidth / 2.0f), yOffset + (kingWidth * (1.0f - 0.5258f)));
             window->draw(king);
         }
