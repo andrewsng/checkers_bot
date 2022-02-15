@@ -31,6 +31,7 @@ Move::Diff Move::tileDiff() const {
 }
 
 bool operator==(const Move &lhs, const Move &rhs) {
-    return (lhs.getStart() == rhs.getStart() &&
-            lhs.getEnd() == rhs.getEnd());
+    return (lhs.getStart()  == rhs.getStart() &&
+            lhs.getEnd()    == rhs.getEnd()   &&
+            lhs.getPlayer() == rhs.getPlayer());
 }

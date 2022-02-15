@@ -6,6 +6,5 @@ set(CMAKE_CXX_STANDARD 17)
 set (SFML_DIR "${CMAKE_CURRENT_LIST_DIR}/SFML-2.5.1/build")
 
 find_package (SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
-add_executable(CheckersBot)
 add_subdirectory(src)
-target_link_libraries(CheckersBot sfml-graphics)
+add_subdirectory(test)
