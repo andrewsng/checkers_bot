@@ -21,6 +21,7 @@ void botMove(CheckersGame &game) {
             }
         }
     }
+    
 }
 
 int main(int argc, char *argv[]) {
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 1);
     if (dist(gen)) {
-        botMove(game);
+        game.makeBotMove();
     }
     int t0 = 0;
     int t1 = 0;
@@ -65,7 +66,7 @@ int main(int argc, char *argv[]) {
                             game.setActiveTile(-1);
                             if (!(*cont)) {
                                 game.changeTurn();
-                                botMove(game);
+                                game.makeBotMove();
                             }
                         }
                         else {

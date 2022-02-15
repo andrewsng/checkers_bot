@@ -1,5 +1,6 @@
 #include "checkersgame.hpp"
 #include "movegen.hpp"
+#include "searching.hpp"
 #include <iostream>
 #include <vector>
 #include <optional>
@@ -142,4 +143,11 @@ optional<bool> CheckersGame::makeMove(Move move) {
         return false;
     }
     return true;
+}
+
+void CheckersGame::makeBotMove() {
+    if (auto move = miniMax(_board, _player, 8)) {
+        makeMove(*move);
+        changeTurn();
+    }
 }

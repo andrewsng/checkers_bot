@@ -21,6 +21,7 @@ public:
     void setActiveTile(int tile);
     void changeTurn();
     std::optional<bool> makeMove(Move move);
+    void makeBotMove();
 
 private:
 

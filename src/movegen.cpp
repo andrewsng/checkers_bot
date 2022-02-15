@@ -19,14 +19,14 @@ vector<Move> generateMoves(const Board &board, int player) {
     auto positions = isRed ? board.getRedPositions() : board.getBlackPositions();
     for (const auto &tile : positions) {
         generateLeftRight(board, player, moves, tile, !isRed);
-        if (board.isKing(tile)) {
+        /* if (board.isKing(tile)) {
             generateLeftRight(board, player, moves, tile, isRed);
-        }
+        } */
     }
-    auto isJump = [](const Move &move) { return move.isAJump(); };
+    /* auto isJump = [](const Move &move) { return move.isAJump(); };
     if (std::find_if(moves.begin(), moves.end(), isJump) != moves.end()) {
         moves.erase(std::remove_if(moves.begin(), moves.end(), std::not_fn(isJump)), moves.end());
-    }
+    } */
     return moves;
 }
 
@@ -41,11 +41,11 @@ void generateNextMove(const Board &board, int player, vector<Move> &moves,
     if (auto nextTile = getNext(board, tile, isUpward)) {
         if (!board.isOccupied(*nextTile)) {
             moves.push_back(Move{tile, *nextTile, player});
-        } else if (auto nextJump = getNext(board, *nextTile, isUpward)) {
+        } /* else if (auto nextJump = getNext(board, *nextTile, isUpward)) {
             if (board.isOpponent(*nextTile, player) && !board.isOccupied(*nextJump)) {
                 moves.push_back(Move{tile, *nextJump, player});
             }
-        }
+        } */
     }
 }
 
