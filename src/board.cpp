@@ -2,9 +2,12 @@
 #include "move.hpp"
 #include "movegen.hpp"
 #include "searching.hpp"
+#include <vector>
+using std::vector;
+#include <optional>
+using std::optional;
 #include <cctype>
 using std::toupper;
-using std::vector;
 
 int Board::getPlayer() const {
     return _player;
@@ -101,6 +104,10 @@ bool Board::isLegalMove(const Move &move, int player) const {
     return true;
 }
 
+optional<Move> Board::getBotMove(int player) const {
+    return miniMax(*this, player, 8);
+}
+
 void Board::makeMove(const Move &move, int player) {
     auto &start = _data[move.getStart()];
     auto &end = _data[move.getEnd()];
@@ -116,11 +123,4 @@ void Board::makeMove(const Move &move, int player) {
 
 void Board::changeTurn() {
     _player = 1 - getPlayer();
-}
-
-void Board::makeBotMove(int player) {
-    if (auto move = miniMax(*this, player, 8)) {
-        makeMove(*move, player);
-        changeTurn();
-    }
 }

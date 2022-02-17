@@ -24,19 +24,21 @@ void botMove(Board &game) {
 int main(int argc, char *argv[]) {
     CheckersDisplay display(1000, 1000, "Checkers");
     Board game{};
-    display.drawBoard(game);
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 1);
-    if (dist(gen)) {
-        // botMove(game);
+    int player = dist(gen);
+    int opponent = 1 - player;
+    display.drawBoard(game, player);
+    if (opponent == 0) {
+        if (auto botMove = game.getBotMove(game.getPlayer())) {
+            game.makeMove(*botMove, game.getPlayer());
+        }
+        game.changeTurn();
     }
     while (display.isOpen()) {
         display.handleInputs(game);
-        game.makeBotMove(game.getPlayer());
-        display.drawBoard(game);
-        game.makeBotMove(game.getPlayer());
-        display.drawBoard(game);
+        display.drawBoard(game, player);
     }
     return 0;
 }

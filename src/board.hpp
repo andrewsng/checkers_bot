@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <optional>
 
 
 class Move;
@@ -29,9 +30,9 @@ public:
     bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
     bool isLegalMove(const Move &move, int player) const;
+    std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
     void changeTurn();
-    void makeBotMove(int player);
 
 private:
 

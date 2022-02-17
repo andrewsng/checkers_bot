@@ -30,7 +30,7 @@ void CheckersDisplay::handleInputs(Board &game) {
             _window.setView(sf::View(visibleArea));
         }
         if (event.type == sf::Event::MouseButtonPressed) {
-            /* if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 sf::Vector2i clickPos = sf::Mouse::getPosition(_window);
                 clickPos.y = boardSize - 1 - clickPos.y;
                 int x = clickPos.x / (boardSize / 8);
@@ -40,21 +40,32 @@ void CheckersDisplay::handleInputs(Board &game) {
                     (y % 2) == (x % 2)) {
                     _prevActive = _currActive;
                     _currActive = (y * 8 + x) / 2;
+                    if (game.getPlayer() == 0) {
+                        _currActive = 31 - _currActive;
+                    }
                     Move inputMove{_prevActive, _currActive};
                     if (game.isLegalMove(inputMove, game.getPlayer())) {
                         game.makeMove(inputMove, game.getPlayer());
+                        _prevMove = inputMove;
                         _currActive = 32;
                         game.changeTurn();
-                        drawBoard(game);
-                        game.makeBotMove(game.getPlayer());
+                        drawBoard(game, 1 - game.getPlayer());
+                        if (auto botMove = game.getBotMove(game.getPlayer())) {
+                            game.makeMove(*botMove, game.getPlayer());
+                            _prevMove = *botMove;
+                        }
+                        game.changeTurn();
                     }
                 }
-            } */
+            }
         }
     }
 }
 
-std::pair<float, float> coordsFromTile(Board::Tile tile, int boardSize) {
+std::pair<float, float> coordsFromTile(Board::Tile tile, int player, int boardSize) {
+    if (player == 0) {
+        tile = 31 - tile;
+    }
     auto x = tile % 4;
     auto y = 7 - (tile / 4);
     float xOffset = 0.0f;
@@ -69,7 +80,7 @@ std::pair<float, float> coordsFromTile(Board::Tile tile, int boardSize) {
     }
 }
 
-void CheckersDisplay::drawBoard(const Board &game) {
+void CheckersDisplay::drawBoard(const Board &game, int player) {
     auto size = _window.getSize();
     auto boardSize = std::min(size.x, size.y);
 
@@ -78,9 +89,9 @@ void CheckersDisplay::drawBoard(const Board &game) {
     boardBG.setFillColor(sf::Color(240, 215, 180));
     _window.draw(boardBG);
     for (int tile = 0; tile < 32; ++tile) {
-        auto [xOffset, yOffset] = coordsFromTile(tile, boardSize);
+        auto [xOffset, yOffset] = coordsFromTile(tile, player, boardSize);
         sf::RectangleShape tileSquare(sf::Vector2f(boardSize / 8.0f, boardSize / 8.0f));
-        if (tile == _currActive) {
+        if (tile == _currActive || tile == _prevMove.getStart() || tile == _prevMove.getEnd()) {
             tileSquare.setFillColor(sf::Color(255, 240, 150));
         }
         else {
@@ -114,8 +125,8 @@ void CheckersDisplay::drawBoard(const Board &game) {
     }
     for (const auto &move : generateMoves(game, game.getPlayer())) {
         for (auto it = move.tiles.begin(); it != (move.tiles.end() - 1); ++it) {
-            auto [startX, startY] = coordsFromTile(*it, boardSize);
-            auto [endX, endY] = coordsFromTile(*(it + 1), boardSize);
+            auto [startX, startY] = coordsFromTile(*it, player, boardSize);
+            auto [endX, endY] = coordsFromTile(*(it + 1), player, boardSize);
             auto offset = boardSize / 16.0f;
             sf::Vertex line[] = {
                 sf::Vertex(sf::Vector2f(startX + offset, startY + offset)),
