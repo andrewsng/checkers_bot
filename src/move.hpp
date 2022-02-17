@@ -2,8 +2,10 @@
 #define MOVE_HPP
 
 #include "board.hpp"
+#include <vector>
 #include <utility>
 #include <optional>
+#include <initializer_list>
 
 
 class Move {
@@ -12,20 +14,17 @@ public:
 
     using Tile = Board::Tile;
     using Diff = Tile;
-    Move(Tile start, Tile end, int player);
-    Tile getStart() const { return _start; }
-    Tile getEnd() const { return _end; }
-    int getPlayer() const { return _player; }
+    Move(std::initializer_list<Tile> tileList);
+    Tile getStart() const;
+    Tile getEnd() const;
     bool isAJump() const;
-    std::optional<Move::Tile> getCaptured() const;
+    std::vector<Tile> getCaptured() const;
+
+    std::vector<Tile> tiles;
 
 private:
 
-    Diff tileDiff() const; 
-
-    Tile _start;
-    Tile _end;
-    int _player;
+    Diff tileDiff(Tile t0, Tile t1) const; 
 
 };
 
