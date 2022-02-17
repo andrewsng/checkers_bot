@@ -1,5 +1,7 @@
 #include "searching.hpp"
 #include "movegen.hpp"
+#include <iostream>
+#include <iomanip>
 #include <utility>
 using std::pair;
 using std::make_pair;
@@ -9,13 +11,15 @@ using std::optional;
 #include <limits>
 
 
-pair<double, optional<Move>> maxMove(const Board &board, int player, int depth);
-pair<double, optional<Move>> minMove(const Board &board, int player, int depth);
-double evalBoard(const Board &board, int player);
+pair<double, optional<Move>> maxMove(const Board &, int, int, unsigned long long &);
+pair<double, optional<Move>> minMove(const Board &, int, int, unsigned long long &);
+double evalBoard(const Board &, int);
 
 
 optional<Move> miniMax(const Board &board, int player, int depth) {
-    auto [dummy, bestMove] = maxMove(board, player, depth);
+    unsigned long long count{0};
+    auto [dummy, bestMove] = maxMove(board, player, depth, count);
+    std::cout << "MiniMax Board Count: " << std::right << std::setw(12) << count << "\n";
     if (bestMove) {
         return *bestMove;
     }
@@ -24,7 +28,8 @@ optional<Move> miniMax(const Board &board, int player, int depth) {
     }
 }
 
-pair<double, optional<Move>> maxMove(const Board &board, int player, int depth) {
+pair<double, optional<Move>> maxMove(const Board &board, int player, int depth, unsigned long long &count) {
+    ++count;
     auto moves = generateMoves(board, player);
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, player), optional<Move>{});
@@ -33,8 +38,8 @@ pair<double, optional<Move>> maxMove(const Board &board, int player, int depth) 
     Move maxMove = moves.front();
     for (const auto &move : moves) {
         Board next = board;
-        next.updateBoard(move, player);
-        auto [nextVal, dummy] = minMove(next, 1 - player, depth - 1);
+        next.makeMove(move, player);
+        auto [nextVal, dummy] = minMove(next, 1 - player, depth - 1, count);
         if (nextVal > maxVal) {
             maxVal = nextVal;
             maxMove = move;
@@ -43,7 +48,8 @@ pair<double, optional<Move>> maxMove(const Board &board, int player, int depth) 
     return make_pair(maxVal, maxMove);
 }
 
-pair<double, optional<Move>> minMove(const Board &board, int player, int depth) {
+pair<double, optional<Move>> minMove(const Board &board, int player, int depth, unsigned long long &count) {
+    ++count;
     auto moves = generateMoves(board, player);
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, 1 - player), optional<Move>{});
@@ -52,8 +58,8 @@ pair<double, optional<Move>> minMove(const Board &board, int player, int depth) 
     Move minMove = moves.front();
     for (const auto &move : moves) {
         Board next = board;
-        next.updateBoard(move, player);
-        auto [nextVal, dummy] = maxMove(next, 1 - player, depth - 1);
+        next.makeMove(move, player);
+        auto [nextVal, dummy] = maxMove(next, 1 - player, depth - 1, count);
         if (nextVal < minVal) {
             minVal = nextVal;
             minMove = move;

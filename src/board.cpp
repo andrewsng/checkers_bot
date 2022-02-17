@@ -1,8 +1,14 @@
 #include "board.hpp"
 #include "move.hpp"
+#include "movegen.hpp"
+#include "searching.hpp"
 #include <cctype>
 using std::toupper;
 using std::vector;
+
+int Board::getPlayer() const {
+    return _player;
+}
 
 vector<Board::Tile> Board::getRedPositions() const {
     vector<Tile> redPositions{};
@@ -82,7 +88,20 @@ char Board::symbolOn(Tile tile) const {
     return _data[tile];
 }
 
-void Board::updateBoard(const Move &move, int player) {
+bool Board::isLegalMove(const Move &move, int player) const {
+    auto legalMoves = generateMoves(*this, player);
+    auto it = std::find_if(legalMoves.begin(), legalMoves.end(),
+                           [move](const Move &legalMove) {
+                               return legalMove.getStart() == move.getStart() &&
+                                      legalMove.getEnd()   == move.getEnd();
+                           });
+    if (it == legalMoves.end()) {
+        return false;
+    }
+    return true;
+}
+
+void Board::makeMove(const Move &move, int player) {
     auto &start = _data[move.getStart()];
     auto &end = _data[move.getEnd()];
     end = start;
@@ -92,5 +111,16 @@ void Board::updateBoard(const Move &move, int player) {
     }
     if (isPromotion(move, player)) {
         end = toupper(end);
+    }
+}
+
+void Board::changeTurn() {
+    _player = 1 - getPlayer();
+}
+
+void Board::makeBotMove(int player) {
+    if (auto move = miniMax(*this, player, 8)) {
+        makeMove(*move, player);
+        changeTurn();
     }
 }

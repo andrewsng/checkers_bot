@@ -135,7 +135,7 @@ bool CheckersGame::makeMove(Move move) {
     if (it == _legalMoves.end()) {
         return false;
     }
-    _board.updateBoard(*it, _player);
+    _board.makeMove(*it, _player);
     _legalMovesCached = false;
     return true;
 }

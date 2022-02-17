@@ -13,6 +13,7 @@ public:
 
     using Tile = std::string::size_type;
     Board() = default;
+    int getPlayer() const;
     std::vector<Tile> getRedPositions() const;
     std::vector<Tile> getBlackPositions() const;
     static bool onEvenRow(Tile tile);
@@ -27,7 +28,10 @@ public:
     bool isPromotionRow(Tile tile, int player) const;
     bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
-    void updateBoard(const Move &move, int player);
+    bool isLegalMove(const Move &move, int player) const;
+    void makeMove(const Move &move, int player);
+    void changeTurn();
+    void makeBotMove(int player);
 
 private:
 
@@ -37,6 +41,7 @@ private:
     // std::string _data{"          rr     r rb    rr     "};
     // std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
     // std::string _data{"      bbb rRbbb     rrr      rrr"};
+    int _player{0};
 
 };
 
