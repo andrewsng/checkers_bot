@@ -63,5 +63,24 @@ pair<double, optional<Move>> minMove(const Board &board, int player, int depth) 
 }
 
 double evalBoard(const Board &board, int player) {
-    return 0.0;
+    auto playerPieces   = (player == 0) ? board.getRedPositions() : board.getBlackPositions();
+    auto opponentPieces = (player == 1) ? board.getRedPositions() : board.getBlackPositions();
+    double checkerValue = 1.0;
+    double kingValue = 1.5;
+    double score{0.0};
+    for (const auto &piece : playerPieces) {
+        if (board.isKing(piece)) {
+            score += kingValue;
+        } else {
+            score += checkerValue;
+        }
+    }
+    for (const auto &piece : opponentPieces) {
+        if (board.isKing(piece)) {
+            score -= kingValue;
+        } else {
+            score -= checkerValue;
+        }
+    }
+    return score;
 }

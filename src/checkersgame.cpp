@@ -3,10 +3,8 @@
 #include "searching.hpp"
 #include <iostream>
 #include <vector>
-#include <optional>
 #include <algorithm>
 using std::vector;
-using std::optional;
 
 
 void CheckersGame::printBoard() const {

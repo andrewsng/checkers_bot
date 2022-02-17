@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
                             game.setActiveTile(-1);
                             game.changeTurn();
                             game.drawBoard(&window);
-                            // botMove(game);
+                            game.makeBotMove();
                         }
                         else {
                             game.setActiveTile(t1);
