@@ -1,4 +1,5 @@
 #include "checkersgame.hpp"
+#include "checkersdisplay.hpp"
 #include <iostream>
 #include <random>
 #include <cmath>
@@ -19,8 +20,8 @@ void botMove(CheckersGame &game) {
 }
 
 int main(int argc, char *argv[]) {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Checkers");
-    sf::View view = window.getDefaultView();
+    // sf::RenderWindow window(sf::VideoMode(1000, 1000), "Checkers");
+    CheckersDisplay display(1000, 1000, "Checkers");
     CheckersGame game{};
     game.drawBoard(&window);
     std::random_device rd;
