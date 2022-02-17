@@ -97,14 +97,16 @@ void CheckersGame::drawBoard(sf::RenderWindow *window) const {
         }
     }
     for (const auto &move : getLegalMoves()) {
-        auto [startX, startY] = coordsFromTile(move.getStart(), boardSize);
-        auto [endX, endY] = coordsFromTile(move.getEnd(), boardSize);
-        auto offset = boardSize / 16.0f;
-        sf::Vertex line[] = {
-            sf::Vertex(sf::Vector2f(startX + offset, startY + offset)),
-            sf::Vertex(sf::Vector2f(endX + offset, endY + offset))
-        };
-        window->draw(line, 2, sf::Lines);
+        for (auto it = move.tiles.begin(); it != (move.tiles.end() - 1); ++it) {
+            auto [startX, startY] = coordsFromTile(*it, boardSize);
+            auto [endX, endY] = coordsFromTile(*(it + 1), boardSize);
+            auto offset = boardSize / 16.0f;
+            sf::Vertex line[] = {
+                sf::Vertex(sf::Vector2f(startX + offset, startY + offset)),
+                sf::Vertex(sf::Vector2f(endX + offset, endY + offset))
+            };
+            window->draw(line, 2, sf::Lines);
+        }
     }
 
     window->display();
@@ -127,22 +129,29 @@ optional<bool> CheckersGame::makeMove(Move move) {
         _legalMoves = generateMoves(_board, _player);
         _legalMovesCached = true;
     }
-    if (std::find(_legalMoves.begin(), _legalMoves.end(), move) == _legalMoves.end()) {
+    auto it = std::find_if(_legalMoves.begin(), _legalMoves.end(),
+            [move](const Move &legalMove) {
+                return legalMove.getStart() == move.getStart() &&
+                       legalMove.getEnd()   == move.getEnd();
+            });
+    if (it == _legalMoves.end()) {
         return {};
     }
-    _board.updateBoard(move);
-    if (_board.isPromotion(move) || !move.isAJump()) {
+    _board.updateBoard(*it, _player);
+    if (_board.isPromotion(*it, _player) || !(*it).isAJump()) {
         _legalMovesCached = false;
         return false;
     }
-    _legalMoves = generateMoves(_board, _player);
+    /* _legalMoves = generateMoves(_board, _player);
     _legalMoves.erase(std::remove_if(_legalMoves.begin(), _legalMoves.end(),
         [move](const Move &nextMove) { return nextMove.getStart() != move.getEnd() || !nextMove.isAJump(); }), _legalMoves.end());
     if (_legalMoves.empty()) {
         _legalMovesCached = false;
         return false;
     }
-    return true;
+    return true; */
+    _legalMovesCached = false;
+    return false;
 }
 
 void CheckersGame::makeBotMove() {

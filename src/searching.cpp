@@ -33,7 +33,7 @@ pair<double, optional<Move>> maxMove(const Board &board, int player, int depth) 
     Move maxMove = moves.front();
     for (const auto &move : moves) {
         Board next = board;
-        next.updateBoard(move);
+        next.updateBoard(move, player);
         auto [nextVal, dummy] = minMove(next, 1 - player, depth - 1);
         if (nextVal > maxVal) {
             maxVal = nextVal;
@@ -52,7 +52,7 @@ pair<double, optional<Move>> minMove(const Board &board, int player, int depth) 
     Move minMove = moves.front();
     for (const auto &move : moves) {
         Board next = board;
-        next.updateBoard(move);
+        next.updateBoard(move, player);
         auto [nextVal, dummy] = maxMove(next, 1 - player, depth - 1);
         if (nextVal < minVal) {
             minVal = nextVal;

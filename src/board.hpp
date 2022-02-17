@@ -25,9 +25,9 @@ public:
     bool isOutOfBounds(Tile tile) const;
     bool isOpponent(Tile tile, int player) const;
     bool isPromotionRow(Tile tile, int player) const;
-    bool isPromotion(const Move &move);
+    bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
-    void updateBoard(const Move &move);
+    void updateBoard(const Move &move, int player);
 
 private:
 
@@ -36,6 +36,7 @@ private:
     // std::string _data{"     bb     b b R   bb          "};
     // std::string _data{"          rr     r rb    rr     "};
     // std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
+    // std::string _data{"      bbb rRbbb     rrr      rrr"};
 
 };
 

@@ -74,23 +74,23 @@ bool Board::isPromotionRow(Tile tile, int player) const {
     return false;
 }
 
-bool Board::isPromotion(const Move &move) {
-    return !isKing(move.getStart()) && isPromotionRow(move.getEnd(), move.getPlayer());
+bool Board::isPromotion(const Move &move, int player) const {
+    return !isKing(move.getStart()) && isPromotionRow(move.getEnd(), player);
 }
 
 char Board::symbolOn(Tile tile) const {
     return _data[tile];
 }
 
-void Board::updateBoard(const Move &move) {
+void Board::updateBoard(const Move &move, int player) {
     auto &start = _data[move.getStart()];
     auto &end = _data[move.getEnd()];
     end = start;
     start = ' ';
-    if (auto captured = move.getCaptured()) {
-        _data[*captured] = ' ';
+    for (const auto &captured : move.getCaptured()) {
+        _data[captured] = ' ';
     }
-    if (isPromotion(move)) {
+    if (isPromotion(move, player)) {
         end = toupper(end);
     }
 }
