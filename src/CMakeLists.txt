@@ -3,7 +3,7 @@ add_library(Checkers
     move.cpp move.hpp
     movegen.cpp movegen.hpp
     checkersgame.cpp checkersgame.hpp
-    searching.cpp checkersgame.hpp
+    searching.cpp searching.hpp
 )
 target_link_libraries(Checkers sfml-graphics)
 

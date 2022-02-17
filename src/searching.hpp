@@ -6,7 +6,7 @@
 #include <optional>
 
 
-std::optional<Move> miniMax(Board board, int player, int depth);
+std::optional<Move> miniMax(const Board &board, int player, int depth);
 
 
 #endif  // SEARCHING_HPP

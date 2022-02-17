@@ -1,17 +1,67 @@
 #include "searching.hpp"
 #include "movegen.hpp"
+#include <utility>
+using std::pair;
+using std::make_pair;
 #include <optional>
 using std::optional;
 #include <random>
+#include <limits>
 
 
-optional<Move> miniMax(Board board, int player, int depth) {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    auto legalMoves = generateMoves(board, player);
-    if (legalMoves.empty()) {
+pair<double, optional<Move>> maxMove(const Board &board, int player, int depth);
+pair<double, optional<Move>> minMove(const Board &board, int player, int depth);
+double evalBoard(const Board &board, int player);
+
+
+optional<Move> miniMax(const Board &board, int player, int depth) {
+    auto [dummy, bestMove] = maxMove(board, player, depth);
+    if (bestMove) {
+        return *bestMove;
+    }
+    else {
         return {};
     }
-    std::uniform_int_distribution<std::size_t> dist(0ull, legalMoves.size() - 1);
-    return legalMoves[dist(gen)];
+}
+
+pair<double, optional<Move>> maxMove(const Board &board, int player, int depth) {
+    auto moves = generateMoves(board, player);
+    if (depth == 0 || moves.empty()) {
+        return make_pair(evalBoard(board, player), optional<Move>{});
+    }
+    auto maxVal = std::numeric_limits<double>::lowest();
+    Move maxMove = moves.front();
+    for (const auto &move : moves) {
+        Board next = board;
+        next.updateBoard(move);
+        auto [nextVal, dummy] = minMove(next, 1 - player, depth - 1);
+        if (nextVal > maxVal) {
+            maxVal = nextVal;
+            maxMove = move;
+        }
+    }
+    return make_pair(maxVal, maxMove);
+}
+
+pair<double, optional<Move>> minMove(const Board &board, int player, int depth) {
+    auto moves = generateMoves(board, player);
+    if (depth == 0 || moves.empty()) {
+        return make_pair(evalBoard(board, 1 - player), optional<Move>{});
+    }
+    auto minVal = std::numeric_limits<double>::max();
+    Move minMove = moves.front();
+    for (const auto &move : moves) {
+        Board next = board;
+        next.updateBoard(move);
+        auto [nextVal, dummy] = maxMove(next, 1 - player, depth - 1);
+        if (nextVal < minVal) {
+            minVal = nextVal;
+            minMove = move;
+        }
+    }
+    return make_pair(minVal, minMove);
+}
+
+double evalBoard(const Board &board, int player) {
+    return 0.0;
 }
