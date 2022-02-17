@@ -18,16 +18,16 @@ public:
     void printBlackMoves() const;
     void drawBoard(sf::RenderWindow *window) const;
     std::vector<Move> getLegalMoves() const;
-    void setActiveTile(int tile);
+    void setActiveTile(Board::Tile tile);
     void changeTurn();
-    std::optional<bool> makeMove(Move move);
+    bool makeMove(Move move);
     void makeBotMove();
 
 private:
 
     Board _board{};
     int _player{0};
-    int _active{-1};
+    Board::Tile _active{32};
     std::vector<Move> _legalMoves{};
     bool _legalMovesCached{false};
 

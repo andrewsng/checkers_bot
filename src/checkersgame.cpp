@@ -116,7 +116,7 @@ vector<Move> CheckersGame::getLegalMoves() const {
     return _legalMovesCached ? _legalMoves : generateMoves(_board, _player);
 }
 
-void CheckersGame::setActiveTile(int tile) {
+void CheckersGame::setActiveTile(Board::Tile tile) {
     _active = tile;
 }
 
@@ -124,7 +124,7 @@ void CheckersGame::changeTurn() {
     _player = 1 - _player;
 }
 
-optional<bool> CheckersGame::makeMove(Move move) {
+bool CheckersGame::makeMove(Move move) {
     if (!_legalMovesCached) {
         _legalMoves = generateMoves(_board, _player);
         _legalMovesCached = true;
@@ -135,23 +135,11 @@ optional<bool> CheckersGame::makeMove(Move move) {
                        legalMove.getEnd()   == move.getEnd();
             });
     if (it == _legalMoves.end()) {
-        return {};
+        return false;
     }
     _board.updateBoard(*it, _player);
-    if (_board.isPromotion(*it, _player) || !(*it).isAJump()) {
-        _legalMovesCached = false;
-        return false;
-    }
-    /* _legalMoves = generateMoves(_board, _player);
-    _legalMoves.erase(std::remove_if(_legalMoves.begin(), _legalMoves.end(),
-        [move](const Move &nextMove) { return nextMove.getStart() != move.getEnd() || !nextMove.isAJump(); }), _legalMoves.end());
-    if (_legalMoves.empty()) {
-        _legalMovesCached = false;
-        return false;
-    }
-    return true; */
     _legalMovesCached = false;
-    return false;
+    return true;
 }
 
 void CheckersGame::makeBotMove() {

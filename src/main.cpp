@@ -7,32 +7,27 @@
 void botMove(CheckersGame &game) {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    while (true) {
-        auto legalMoves = game.getLegalMoves();
-        if (legalMoves.empty()) {
-            game.changeTurn();
-            return;
-        }
-        std::uniform_int_distribution<std::size_t> dist(0ull, legalMoves.size() - 1);
-        if (auto cont = game.makeMove(legalMoves[dist(gen)])) {
-            if (!(*cont)) {
-                game.changeTurn();
-                break;
-            }
-        }
+    auto legalMoves = game.getLegalMoves();
+    if (legalMoves.empty()) {
+        game.changeTurn();
+        return;
     }
-    
+    std::uniform_int_distribution<std::size_t> dist(0ull, legalMoves.size() - 1);
+    if (game.makeMove(legalMoves[dist(gen)])) {
+        game.changeTurn();
+    }
 }
 
 int main(int argc, char *argv[]) {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Checkers");
     sf::View view = window.getDefaultView();
     CheckersGame game{};
+    game.drawBoard(&window);
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 1);
     if (dist(gen)) {
-        game.makeBotMove();
+        // botMove(game);
     }
     auto t0 = 0ull;
     auto t1 = 0ull;
@@ -62,13 +57,11 @@ int main(int argc, char *argv[]) {
                         t0 = t1;
                         t1 = (y * 8 + x) / 2;
 
-                        if (auto cont = game.makeMove(Move{t0, t1})) {
+                        if (game.makeMove(Move{t0, t1})) {
                             game.setActiveTile(-1);
-                            if (!(*cont)) {
-                                game.changeTurn();
-                                game.drawBoard(&window);
-                                game.makeBotMove();
-                            }
+                            game.changeTurn();
+                            game.drawBoard(&window);
+                            // botMove(game);
                         }
                         else {
                             game.setActiveTile(t1);
