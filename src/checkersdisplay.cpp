@@ -44,9 +44,9 @@ void CheckersDisplay::handleInputs(Board &game) {
                         _currActive = 31 - _currActive;
                     }
                     Move inputMove{_prevActive, _currActive};
-                    if (game.isLegalMove(inputMove, game.getPlayer())) {
-                        game.makeMove(inputMove, game.getPlayer());
-                        _prevMove = inputMove;
+                    if (auto move = game.getMoveIfLegal(inputMove, game.getPlayer())) {
+                        game.makeMove(*move, game.getPlayer());
+                        _prevMove = *move;
                         _currActive = 32;
                         game.changeTurn();
                         drawBoard(game, 1 - game.getPlayer());

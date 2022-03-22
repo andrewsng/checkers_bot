@@ -16,7 +16,7 @@ void botMove(Board &game) {
     }
     std::uniform_int_distribution<std::size_t> dist(0ull, legalMoves.size() - 1);
     auto randomMove = legalMoves[dist(gen)];
-    if (game.isLegalMove(randomMove, game.getPlayer())) {
+    if (auto move = game.getMoveIfLegal(randomMove, game.getPlayer())) {
         game.makeMove(randomMove, game.getPlayer());
         game.changeTurn();
     }
@@ -31,15 +31,15 @@ int main(int argc, char *argv[]) {
     int minimax = dist(gen);
     int alphabeta = 1 - minimax;
     display.drawBoard(game, minimax);
-    if (minimax == 0) {
-        if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
+    if (alphabeta == 0) {
+        if (auto botMove = miniMax(game, game.getPlayer(), 8)) {
             game.makeMove(*botMove, game.getPlayer());
         }
         game.changeTurn();
     }
     while (display.isOpen()) {
-        // display.handleInputs(game);
-        if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
+        display.handleInputs(game);
+        /* if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
             game.makeMove(*botMove, game.getPlayer());
         }
         game.changeTurn();
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
         if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
             game.makeMove(*botMove, game.getPlayer());
         }
-        game.changeTurn();
+        game.changeTurn(); */
         display.drawBoard(game, minimax);
     }
     return 0;

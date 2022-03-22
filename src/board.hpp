@@ -29,7 +29,7 @@ public:
     bool isPromotionRow(Tile tile, int player) const;
     bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
-    bool isLegalMove(const Move &move, int player) const;
+    std::optional<Move> getMoveIfLegal(const Move &move, int player) const;
     std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
     void changeTurn();
@@ -39,9 +39,11 @@ private:
     std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
     // std::string _data{"Rbbb   r       r   rb         r "};
     // std::string _data{"     bb     b b R   bb          "};
-    // std::string _data{"          rr     r rb    rr     "};
+    // std::string _data{"          rr     r rB    rr     "};
     // std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
     // std::string _data{"      bbb rRbbb     rrr      rrr"};
+    // std::string _data{"bbbbb bb br     rr    r    rrrrr"};
+    // std::string _data{"     bb      bb   r             "};
     int _player{0};
 
 };
