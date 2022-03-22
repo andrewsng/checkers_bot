@@ -105,7 +105,7 @@ bool Board::isLegalMove(const Move &move, int player) const {
 }
 
 optional<Move> Board::getBotMove(int player) const {
-    return miniMax(*this, player, 8);
+    return alphaBeta(*this, player, 10);
 }
 
 void Board::makeMove(const Move &move, int player) {

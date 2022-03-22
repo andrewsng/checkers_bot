@@ -1,5 +1,6 @@
 #include "checkersdisplay.hpp"
 #include "movegen.hpp"
+#include "searching.hpp"
 #include <iostream>
 #include <random>
 #include <cmath>
@@ -27,18 +28,27 @@ int main(int argc, char *argv[]) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 1);
-    int player = dist(gen);
-    int opponent = 1 - player;
-    display.drawBoard(game, player);
-    if (opponent == 0) {
-        if (auto botMove = game.getBotMove(game.getPlayer())) {
+    int minimax = dist(gen);
+    int alphabeta = 1 - minimax;
+    display.drawBoard(game, minimax);
+    if (minimax == 0) {
+        if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
             game.makeMove(*botMove, game.getPlayer());
         }
         game.changeTurn();
     }
     while (display.isOpen()) {
-        display.handleInputs(game);
-        display.drawBoard(game, player);
+        // display.handleInputs(game);
+        if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
+            game.makeMove(*botMove, game.getPlayer());
+        }
+        game.changeTurn();
+        display.drawBoard(game, minimax);
+        if (auto botMove = alphaBeta(game, game.getPlayer(), 10)) {
+            game.makeMove(*botMove, game.getPlayer());
+        }
+        game.changeTurn();
+        display.drawBoard(game, minimax);
     }
     return 0;
 }
