@@ -108,7 +108,3 @@ void Board::makeMove(const Move &move, int player) {
         end = toupper(end);
     }
 }
-
-void Board::changeTurn() {
-    _player = 1 - getPlayer();
-}

@@ -31,7 +31,6 @@ public:
     char symbolOn(Tile tile) const;
     std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
-    void changeTurn();
 
 private:
 
