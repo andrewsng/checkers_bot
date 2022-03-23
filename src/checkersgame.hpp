@@ -32,7 +32,7 @@ private:
 
     Board _board{};
     CheckersDisplay _display{1000, 1000, "Checkers"};
-    int _currPlayer;
+    int _currPlayer{0};
     PlayerType _redPlayerType{PlayerType::Human};
     PlayerType _blackPlayerType{PlayerType::Human};
 

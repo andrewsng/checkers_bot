@@ -15,8 +15,8 @@ public:
     bool isOpen() const;
     Board::Tile getPrevSelected() const;
     Board::Tile getCurrSelected() const;
-    void handleInputs(Board &game);
-    void drawBoard(const Board &game, int player);
+    void handleInputs(Board &game, int playerSide);
+    void drawBoard(const Board &game, int playerSide, int currPlayer);
     void resetSelected();
     void setPrevMove(Move prevMove);
 

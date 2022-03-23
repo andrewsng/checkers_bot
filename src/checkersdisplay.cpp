@@ -23,7 +23,7 @@ Board::Tile CheckersDisplay::getCurrSelected() const {
     return _currActive;
 }
 
-void CheckersDisplay::handleInputs(Board &game) {
+void CheckersDisplay::handleInputs(Board &game, int playerSide) {
     auto size = _window.getSize();
     auto boardSize = std::min(size.x, size.y);
 
@@ -48,7 +48,7 @@ void CheckersDisplay::handleInputs(Board &game) {
                     (y % 2) == (x % 2)) {
                     _prevActive = _currActive;
                     _currActive = (y * 8 + x) / 2;
-                    if (game.getPlayer() == 0) {
+                    if (playerSide == 0) {
                         _currActive = 31 - _currActive;
                     }
                     /* Move inputMove{_prevActive, _currActive};
@@ -88,7 +88,7 @@ std::pair<float, float> coordsFromTile(Board::Tile tile, int player, int boardSi
     }
 }
 
-void CheckersDisplay::drawBoard(const Board &game, int player) {
+void CheckersDisplay::drawBoard(const Board &game, int playerSide, int currPlayer) {
     auto size = _window.getSize();
     auto boardSize = std::min(size.x, size.y);
 
@@ -97,7 +97,7 @@ void CheckersDisplay::drawBoard(const Board &game, int player) {
     boardBG.setFillColor(sf::Color(240, 215, 180));
     _window.draw(boardBG);
     for (int tile = 0; tile < 32; ++tile) {
-        auto [xOffset, yOffset] = coordsFromTile(tile, player, boardSize);
+        auto [xOffset, yOffset] = coordsFromTile(tile, playerSide, boardSize);
         sf::RectangleShape tileSquare(sf::Vector2f(boardSize / 8.0f, boardSize / 8.0f));
         if (tile == _currActive || tile == _prevMove.getStart() || tile == _prevMove.getEnd()) {
             tileSquare.setFillColor(sf::Color(255, 240, 150));
@@ -131,10 +131,10 @@ void CheckersDisplay::drawBoard(const Board &game, int player) {
             _window.draw(king);
         }
     }
-    for (const auto &move : generateMoves(game, game.getPlayer())) {
+    for (const auto &move : generateMoves(game, currPlayer)) {
         for (auto it = move.tiles.begin(); it != (move.tiles.end() - 1); ++it) {
-            auto [startX, startY] = coordsFromTile(*it, player, boardSize);
-            auto [endX, endY] = coordsFromTile(*(it + 1), player, boardSize);
+            auto [startX, startY] = coordsFromTile(*it, playerSide, boardSize);
+            auto [endX, endY] = coordsFromTile(*(it + 1), playerSide, boardSize);
             auto offset = boardSize / 16.0f;
             sf::Vertex line[] = {
                 sf::Vertex(sf::Vector2f(startX + offset, startY + offset)),

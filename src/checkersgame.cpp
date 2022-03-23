@@ -70,9 +70,9 @@ void CheckersGame::changeTurn() {
 }
 
 void CheckersGame::displayBoard() {
-    _display.drawBoard(_board, _currPlayer);
+    _display.drawBoard(_board, 0, _currPlayer);
 }
 
 void CheckersGame::handleInputs() {
-    _display.handleInputs(_board);
+    _display.handleInputs(_board, 0);
 }
