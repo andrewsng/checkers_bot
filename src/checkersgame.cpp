@@ -35,9 +35,9 @@ void CheckersGame::attemptMove() {
         case PlayerType::MiniMax:
             potentialMove = miniMax(_board, _currPlayer, 8);
             break;
-        /* case PlayerType::AlphaBeta:
-            potentialMove = getAlphaBetaMove();
-            break; */
+        case PlayerType::AlphaBeta:
+            potentialMove = alphaBeta(_board, _currPlayer, 12);
+            break;
     }
     if (potentialMove) {
         _board.makeMove(*potentialMove, _currPlayer);
