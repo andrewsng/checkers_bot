@@ -1,15 +1,18 @@
 #include "checkersgame.hpp"
 #include "move.hpp"
 #include "movegen.hpp"
+#include "searching.hpp"
 #include <optional>
 using std::optional;
 
 
-void CheckersGame::setRedPlayer(PlayerType type)
-{}
+void CheckersGame::setRedPlayer(PlayerType type) {
+    _redPlayerType = type;
+}
 
-void CheckersGame::setBlackPlayer(PlayerType type)
-{}
+void CheckersGame::setBlackPlayer(PlayerType type) {
+    _blackPlayerType = type;
+}
 
 void CheckersGame::runGame() {
     displayBoard();
@@ -29,10 +32,10 @@ void CheckersGame::attemptMove() {
             potentialMove = getMoveIfLegal(_display.getPrevSelected(),
                                            _display.getCurrSelected());
             break;
-        /* case PlayerType::MiniMax:
-            potentialMove = getMiniMaxMove();
+        case PlayerType::MiniMax:
+            potentialMove = miniMax(_board, _currPlayer, 8);
             break;
-        case PlayerType::AlphaBeta:
+        /* case PlayerType::AlphaBeta:
             potentialMove = getAlphaBetaMove();
             break; */
     }

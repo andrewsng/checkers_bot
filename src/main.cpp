@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
     CheckersGame game{};
     game.setRedPlayer(PlayerType::Human);
-    game.setBlackPlayer(PlayerType::Human);
+    game.setBlackPlayer(PlayerType::MiniMax);
     game.runGame();
     return 0;
 }
