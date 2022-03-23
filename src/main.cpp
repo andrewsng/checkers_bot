@@ -51,4 +51,10 @@ int main(int argc, char *argv[]) {
         display.drawBoard(game, minimax);
     }
     return 0;
+
+
+    CheckersGame game{};
+    game.setRedPlayer(PlayerType::Human);
+    game.setBlackPlayer(PlayerType::AlphaBeta);
+    game.runGame();
 }
