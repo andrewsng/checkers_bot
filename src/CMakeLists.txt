@@ -2,6 +2,7 @@ add_library(Checkers
     board.cpp board.hpp
     move.cpp move.hpp
     movegen.cpp movegen.hpp
+    checkersgame.cpp checkersgame.hpp
     checkersdisplay.cpp checkersdisplay.hpp
     searching.cpp searching.hpp
 )
