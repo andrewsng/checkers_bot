@@ -91,21 +91,6 @@ char Board::symbolOn(Tile tile) const {
     return _data[tile];
 }
 
-optional<Move> Board::getMoveIfLegal(const Move &move, int player) const {
-    auto legalMoves = generateMoves(*this, player);
-    auto it = std::find_if(legalMoves.begin(), legalMoves.end(),
-                           [move](const Move &legalMove) {
-                               return ( legalMove.getStart() == move.getStart() &&
-                                        legalMove.getEnd()   == move.getEnd() ) ||
-                                      ( legalMove.tiles[0] == move.getStart() &&
-                                        legalMove.tiles[1] == move.getEnd() );
-                           });
-    if (it == legalMoves.end()) {
-        return {};
-    }
-    return *it;
-}
-
 optional<Move> Board::getBotMove(int player) const {
     return miniMax(*this, player, 8);
 }

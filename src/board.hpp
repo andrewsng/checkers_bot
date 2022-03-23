@@ -29,7 +29,6 @@ public:
     bool isPromotionRow(Tile tile, int player) const;
     bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
-    std::optional<Move> getMoveIfLegal(const Move &move, int player) const;
     std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
     void changeTurn();

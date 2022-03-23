@@ -15,6 +15,14 @@ bool CheckersDisplay::isOpen() const {
     return _window.isOpen();
 }
 
+Board::Tile CheckersDisplay::getPrevSelected() const {
+    return _prevActive;
+}
+
+Board::Tile CheckersDisplay::getCurrSelected() const {
+    return _currActive;
+}
+
 void CheckersDisplay::handleInputs(Board &game) {
     auto size = _window.getSize();
     auto boardSize = std::min(size.x, size.y);
@@ -43,7 +51,7 @@ void CheckersDisplay::handleInputs(Board &game) {
                     if (game.getPlayer() == 0) {
                         _currActive = 31 - _currActive;
                     }
-                    Move inputMove{_prevActive, _currActive};
+                    /* Move inputMove{_prevActive, _currActive};
                     if (auto move = game.getMoveIfLegal(inputMove, game.getPlayer())) {
                         game.makeMove(*move, game.getPlayer());
                         _prevMove = *move;
@@ -55,7 +63,7 @@ void CheckersDisplay::handleInputs(Board &game) {
                             _prevMove = *botMove;
                         }
                         game.changeTurn();
-                    }
+                    } */
                 }
             }
         }
@@ -139,3 +147,10 @@ void CheckersDisplay::drawBoard(const Board &game, int player) {
     _window.display();
 }
 
+void CheckersDisplay::resetSelected() {
+    _prevActive = _currActive = 32;
+}
+
+void CheckersDisplay::setPrevMove(Move prevMove) {
+    _prevMove = prevMove;
+}

@@ -13,8 +13,12 @@ public:
 
     CheckersDisplay(int width, int height, std::string title);
     bool isOpen() const;
+    Board::Tile getPrevSelected() const;
+    Board::Tile getCurrSelected() const;
     void handleInputs(Board &game);
     void drawBoard(const Board &game, int player);
+    void resetSelected();
+    void setPrevMove(Move prevMove);
 
 private:
 

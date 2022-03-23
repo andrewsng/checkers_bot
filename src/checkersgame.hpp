@@ -2,6 +2,7 @@
 #define CHECKERSGAME_HPP
 
 #include "board.hpp"
+#include "checkersdisplay.hpp"
 
 
 enum class PlayerType {
@@ -21,9 +22,16 @@ public:
 
 private:
 
+    std::optional<Move> getMoveIfLegal(Board::Tile prevSelected,
+                                       Board::Tile currSelected) const;
+    bool isOver() const;
+
     void changeTurn();
+    void displayBoard();
+    void handleInputs();
 
     Board _board{};
+    CheckersDisplay _display{1000, 1000, "Checkers"};
     int _currPlayer;
     PlayerType _redPlayerType{PlayerType::Human};
     PlayerType _blackPlayerType{PlayerType::Human};
