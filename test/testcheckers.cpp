@@ -19,12 +19,12 @@ void testMoveGen(const Board &board, const vector<Move> &correctRedMoves,
 TEST_CASE("Move Generation - Simple Moves") {
     Board b;
     vector<Move> red = {
-        Move{ 20, 16, 0 }, Move{ 20, 17, 0 }, Move{ 21, 17, 0 }, Move{ 21, 18, 0 },
-        Move{ 22, 18, 0 }, Move{ 22, 19, 0 }, Move{ 23, 19, 0 }
+        Move{ 20, 16 }, Move{ 20, 17 }, Move{ 21, 17 }, Move{ 21, 18 },
+        Move{ 22, 18 }, Move{ 22, 19 }, Move{ 23, 19 }
     };
     vector<Move> black = {
-        Move{  8, 12, 1 }, Move{  9, 12, 1 }, Move{  9, 13, 1 },
-        Move{ 10, 13, 1 }, Move{ 10, 14, 1 }, Move{ 11, 14, 1 }, Move{ 11, 15, 1 }
+        Move{  8, 12 }, Move{  9, 12 }, Move{  9, 13 },
+        Move{ 10, 13 }, Move{ 10, 14 }, Move{ 11, 14 }, Move{ 11, 15 }
     };
     testMoveGen(b, red, black);
 }
