@@ -33,10 +33,10 @@ void CheckersGame::attemptMove() {
                                            _display.getCurrSelected());
             break;
         case PlayerType::MiniMax:
-            potentialMove = miniMax(_board, _currPlayer, 8);
+            potentialMove = miniMax(_board, _currPlayer, 7);
             break;
         case PlayerType::AlphaBeta:
-            potentialMove = alphaBeta(_board, _currPlayer, 12);
+            potentialMove = alphaBeta(_board, _currPlayer, 10);
             break;
     }
     if (potentialMove) {

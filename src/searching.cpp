@@ -37,12 +37,13 @@ pair<double, optional<Move>> maxMove(const Board &board, int player, int depth, 
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, player), optional<Move>{});
     }
+    int nextDepth = moves.front().isAJump() ? depth : depth - 1;
     auto maxVal = std::numeric_limits<double>::lowest();
     Move maxMove{};
     for (auto &move : moves) {
         Board next = board;
         next.makeMove(move, player);
-        auto nextVal = minMove(next, 1 - player, depth - 1, count).first;
+        auto nextVal = minMove(next, 1 - player, nextDepth, count).first;
         if (nextVal > maxVal) {
             maxVal = nextVal;
             maxMove = std::move(move);
@@ -57,12 +58,13 @@ pair<double, optional<Move>> minMove(const Board &board, int player, int depth, 
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, 1 - player), optional<Move>{});
     }
+    int nextDepth = moves.front().isAJump() ? depth : depth - 1;
     auto minVal = std::numeric_limits<double>::max();
     Move minMove{};
     for (auto &move : moves) {
         Board next = board;
         next.makeMove(move, player);
-        auto nextVal = maxMove(next, 1 - player, depth - 1, count).first;
+        auto nextVal = maxMove(next, 1 - player, nextDepth, count).first;
         if (nextVal < minVal) {
             minVal = nextVal;
             minMove = std::move(move);
@@ -91,12 +93,13 @@ pair<double, optional<Move>> alphaBetaMax(const Board &board, int player, int de
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, player), optional<Move>{});
     }
+    int nextDepth = moves.front().isAJump() ? depth : depth - 1;
     auto maxVal = std::numeric_limits<double>::lowest();
     Move maxMove{};
     for (const auto &move : moves) {
         Board next = board;
         next.makeMove(move, player);
-        auto [nextVal, dummy] = alphaBetaMin(next, 1 - player, depth - 1, alpha, beta, count);
+        auto [nextVal, dummy] = alphaBetaMin(next, 1 - player, nextDepth, alpha, beta, count);
         if (nextVal > maxVal) {
             maxVal = nextVal;
             maxMove = std::move(move);
@@ -116,12 +119,13 @@ pair<double, optional<Move>> alphaBetaMin(const Board &board, int player, int de
     if (depth == 0 || moves.empty()) {
         return make_pair(evalBoard(board, 1 - player), optional<Move>{});
     }
+    int nextDepth = moves.front().isAJump() ? depth : depth - 1;
     auto minVal = std::numeric_limits<double>::max();
     Move minMove{};
     for (const auto &move : moves) {
         Board next = board;
         next.makeMove(move, player);
-        auto [nextVal, dummy] = alphaBetaMax(next, 1 - player, depth - 1, alpha, beta, count);
+        auto [nextVal, dummy] = alphaBetaMax(next, 1 - player, nextDepth, alpha, beta, count);
         if (nextVal < minVal) {
             minVal = nextVal;
             minMove = std::move(move);
