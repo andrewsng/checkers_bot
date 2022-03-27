@@ -8,6 +8,7 @@ using std::vector;
 using std::optional;
 #include <cctype>
 using std::toupper;
+using std::tolower;
 
 int Board::getPlayer() const {
     return _player;
@@ -102,9 +103,26 @@ void Board::makeMove(const Move &move, int player) {
     start = ' ';
     end = temp;
     for (const auto &captured : move.getCaptured()) {
+        _captured.push({_data[captured], captured});
         _data[captured] = ' ';
     }
     if (isPromotion(move, player)) {
         end = toupper(end);
+    }
+}
+
+void Board::undoMove(const Move &move, int player) {
+    auto &start = _data[move.getStart()];
+    auto &end = _data[move.getEnd()];
+    auto temp = end;
+    end = ' ';
+    start = temp;
+    for (const auto &unused : move.getCaptured()) {
+        const auto &capture = _captured.top();
+        _data[capture.second] = capture.first;
+        _captured.pop();
+    }
+    if (isPromotion(move, player)) {
+        start = tolower(start);
     }
 }

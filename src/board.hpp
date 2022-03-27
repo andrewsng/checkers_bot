@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <optional>
+#include <stack>
+#include <utility>
 
 
 class Move;
@@ -31,6 +33,7 @@ public:
     char symbolOn(Tile tile) const;
     std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
+    void undoMove(const Move &move, int player);
 
 private:
 
@@ -43,6 +46,7 @@ private:
     // std::string _data{"bbbbb bb br     rr    r    rrrrr"};
     // std::string _data{"     bb      bb   r             "};
     int _player{0};
+    std::stack<std::pair<char, Tile>> _captured{};
 
 };
 
