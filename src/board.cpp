@@ -8,11 +8,10 @@ using std::vector;
 using std::optional;
 #include <cctype>
 using std::toupper;
-using std::tolower;
 
 vector<Board::Tile> Board::getRedPositions() const {
     vector<Tile> redPositions{};
-    for (Tile i = 0; i < _data.size(); ++i) {
+    for (Tile i = 0; i < _numTiles; ++i) {
         if (_data[i] == 'r' || _data[i] == 'R') {
             redPositions.push_back(i);
         }
@@ -22,7 +21,7 @@ vector<Board::Tile> Board::getRedPositions() const {
 
 vector<Board::Tile> Board::getBlackPositions() const {
     vector<Tile> blackPositions{};
-    for (Tile i = 0; i < _data.size(); ++i) {
+    for (Tile i = 0; i < _numTiles; ++i) {
         if (_data[i] == 'b' || _data[i] == 'B') {
             blackPositions.push_back(i);
         }
@@ -59,7 +58,7 @@ bool Board::isOccupied(Tile tile) const {
 }
 
 bool Board::isOutOfBounds(Tile tile) const {
-    return tile >= _data.size();
+    return tile >= _numTiles;
 }
 
 bool Board::isOpponent(Tile tile, int player) const {
@@ -99,26 +98,9 @@ void Board::makeMove(const Move &move, int player) {
     start = ' ';
     end = temp;
     for (const auto &captured : move.getCaptured()) {
-        _captured.push({_data[captured], captured});
         _data[captured] = ' ';
     }
     if (isPromotion(move, player)) {
         end = toupper(end);
-    }
-}
-
-void Board::undoMove(const Move &move, int player) {
-    auto &start = _data[move.getStart()];
-    auto &end = _data[move.getEnd()];
-    auto temp = end;
-    end = ' ';
-    start = temp;
-    for (const auto &unused : move.getCaptured()) {
-        const auto &capture = _captured.top();
-        _data[capture.second] = capture.first;
-        _captured.pop();
-    }
-    if (isPromotion(move, player)) {
-        start = tolower(start);
     }
 }

@@ -3,9 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <array>
 #include <optional>
 #include <stack>
 #include <utility>
+#include <cstddef>
 
 
 class Move;
@@ -14,7 +16,7 @@ class Board {
 
 public:
 
-    using Tile = std::string::size_type;
+    using Tile = std::size_t;
     Board() = default;
     std::vector<Tile> getRedPositions() const;
     std::vector<Tile> getBlackPositions() const;
@@ -32,19 +34,18 @@ public:
     char symbolOn(Tile tile) const;
     std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
-    void undoMove(const Move &move, int player);
 
 private:
 
-    std::string _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
-    // std::string _data{"Rbbb   r       r   rb         r "};
-    // std::string _data{"     bb     b b R   bb          "};
-    // std::string _data{"          rr     r rB    rr     "};
-    // std::string _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
-    // std::string _data{"      bbb rRbbb     rrr      rrr"};
-    // std::string _data{"bbbbb bb br     rr    r    rrrrr"};
-    // std::string _data{"     bb      bb   r             "};
-    std::stack<std::pair<char, Tile>> _captured{};
+    static const Tile _numTiles = 32;
+    std::array<char, _numTiles+1> _data{"bbbbbbbbbbbb        rrrrrrrrrrrr"};
+    // std::array<char, _numTiles+1> _data{"Rbbb   r       r   rb         r "};
+    // std::array<char, _numTiles+1> _data{"     bb     b b R   bb          "};
+    // std::array<char, _numTiles+1> _data{"          rr     r rB    rr     "};
+    // std::array<char, _numTiles+1> _data{"bbbb bbbr bbb    rr   rr brrrrrr"};
+    // std::array<char, _numTiles+1> _data{"      bbb rRbbb     rrr      rrr"};
+    // std::array<char, _numTiles+1> _data{"bbbbb bb br     rr    r    rrrrr"};
+    // std::array<char, _numTiles+1> _data{"     bb      bb   r             "};
 
 };
 
