@@ -10,10 +10,6 @@ using std::optional;
 using std::toupper;
 using std::tolower;
 
-int Board::getPlayer() const {
-    return _player;
-}
-
 vector<Board::Tile> Board::getRedPositions() const {
     vector<Tile> redPositions{};
     for (Tile i = 0; i < _data.size(); ++i) {

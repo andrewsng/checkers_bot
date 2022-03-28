@@ -16,7 +16,6 @@ public:
 
     using Tile = std::string::size_type;
     Board() = default;
-    int getPlayer() const;
     std::vector<Tile> getRedPositions() const;
     std::vector<Tile> getBlackPositions() const;
     static bool onEvenRow(Tile tile);
@@ -45,7 +44,6 @@ private:
     // std::string _data{"      bbb rRbbb     rrr      rrr"};
     // std::string _data{"bbbbb bb br     rr    r    rrrrr"};
     // std::string _data{"     bb      bb   r             "};
-    int _player{0};
     std::stack<std::pair<char, Tile>> _captured{};
 
 };

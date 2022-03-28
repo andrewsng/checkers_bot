@@ -65,7 +65,7 @@ vector<Move> generateNextMove(const Board &board, Board::Tile tile, int player,
         }
         else {
             Board jumpTaken{board};
-            jumpTaken.makeMove(firstJump, jumpTaken.getPlayer());
+            jumpTaken.makeMove(firstJump, player);
             auto multiJumps = generateLeftRight(jumpTaken, *nextJump, player, isUpward, true);
             if (jumpTaken.isKing(*nextJump)) {
                 appendMoves(generateLeftRight(jumpTaken, *nextJump, player, !isUpward, true), multiJumps);
