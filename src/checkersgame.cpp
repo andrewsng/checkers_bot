@@ -58,6 +58,9 @@ void CheckersGame::attemptMove() {
         case PlayerType::AlphaBeta:
             potentialMove = alphaBeta(_board, _currPlayer, 10);
             break;
+        case PlayerType::MCTS:
+            potentialMove = monteCarlo(_board, _currPlayer, 100000);
+            break;
     }
     if (potentialMove) {
         _board.makeMove(*potentialMove, _currPlayer);

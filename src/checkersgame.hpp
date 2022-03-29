@@ -13,7 +13,8 @@ enum class PlayerType {
     Human,
     Random,
     MiniMax,
-    AlphaBeta
+    AlphaBeta,
+    MCTS
 };
 
 enum class GameResult {
