@@ -56,7 +56,7 @@ void CheckersGame::attemptMove() {
             potentialMove = miniMax(_board, _currPlayer, 7);
             break;
         case PlayerType::AlphaBeta:
-            potentialMove = alphaBeta(_board, _currPlayer, 10);
+            potentialMove = alphaBetaIDS(_board, _currPlayer, 12, 1.0);
             break;
         case PlayerType::MCTS:
             potentialMove = monteCarlo(_board, _currPlayer, 100000);

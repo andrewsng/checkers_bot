@@ -10,6 +10,7 @@ using std::make_pair;
 using std::optional;
 #include <random>
 #include <limits>
+#include <chrono>
 #include <cmath>
 
 
@@ -72,6 +73,23 @@ pair<double, optional<Move>> minMove(const Board &board, int player, int depth, 
         }
     }
     return make_pair(minVal, std::move(minMove));
+}
+
+optional<Move> alphaBetaIDS(const Board &board, int player, int maxDepth, double timeLimitInSec) {
+    int depth = 1;
+    optional<Move> moveToReturn{};
+    auto start = std::chrono::steady_clock::now();
+    while (depth <= maxDepth) {
+        moveToReturn = alphaBeta(board, player, depth);
+        ++depth;
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsedSec = end - start;
+        std::cout << elapsedSec.count() << "\n";
+        if (elapsedSec.count() >= timeLimitInSec * 0.75) {
+            break;
+        }
+    }
+    return moveToReturn;
 }
 
 optional<Move> alphaBeta(const Board &board, int player, int depth) {
