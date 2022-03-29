@@ -163,7 +163,7 @@ double evalBoard(const Board &board, int player) {
 }
 
 optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
-    MCTSNode treeRoot{};
+    MCTSNode treeRoot{board, player};
     int iters = 0;
     while (iters < maxIters) {
         auto leafToExpand = treeRoot.selectLeaf();
