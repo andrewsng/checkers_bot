@@ -160,3 +160,18 @@ double evalBoard(const Board &board, int player) {
     }
     return score;
 }
+
+optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
+    MCTSNode treeRoot{board};
+    auto result = rollout(treeRoot);
+    propagateResult(result, treeRoot);
+    int iters = 0;
+    while (iters < maxIters) {
+        auto leafToExpand = treeRoot.selectLeaf();
+        auto childToSimulate = leafToExpand.expandLeaf();
+        auto result = childToSimulate.rollout();
+        childToSimulate.propagateResult(result);
+    }
+
+    return {};
+}
