@@ -33,7 +33,7 @@ MCTSNode *MCTSNode::expandLeaf() {
     return _children.back().get();
 }
 
-int MCTSNode::rollout() const {
+GameResult MCTSNode::rollout() const {
     CheckersGame simulation(_board, _player);
     simulation.setRedPlayer(PlayerType::Random);
     simulation.setBlackPlayer(PlayerType::Random);
@@ -41,7 +41,7 @@ int MCTSNode::rollout() const {
     return simulation.result();
 }
 
-void MCTSNode::propagateResult(int result) const {
+void MCTSNode::propagateResult(GameResult result) const {
 }
 
 double MCTSNode::UCTValue() const {

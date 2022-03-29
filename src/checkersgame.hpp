@@ -16,6 +16,12 @@ enum class PlayerType {
     AlphaBeta
 };
 
+enum class GameResult {
+    RedWin,
+    BlackWin,
+    Draw,
+};
+
 class CheckersGame {
 
 public:
@@ -27,7 +33,7 @@ public:
     void createDisplay();
     void runGame();
     void attemptMove();
-    int result() const;
+    GameResult result() const;
 
 private:
 

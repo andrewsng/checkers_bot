@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include "move.hpp"
+#include "checkersgame.hpp"
 #include "movegen.hpp"
 #include <vector>
 #include <memory>
@@ -15,8 +16,8 @@ public:
     MCTSNode(Board board, int player);
     MCTSNode *selectLeaf();
     MCTSNode *expandLeaf();
-    void propagateResult(int result) const;
-    int rollout() const;
+    void propagateResult(GameResult result) const;
+    GameResult rollout() const;
 
 private:
 

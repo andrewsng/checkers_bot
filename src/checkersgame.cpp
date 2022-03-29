@@ -67,12 +67,13 @@ void CheckersGame::attemptMove() {
     }
 }
 
-int CheckersGame::result() const {
-    int result{};
+GameResult CheckersGame::result() const {
+    GameResult result{};
     if (_moveHistory.size() > 1000) {
-        result = 0;
+        result = GameResult::Draw;
     } else if (generateMoves(_board, _currPlayer).empty()) {
-        result = (_currPlayer == 1) ? 1 : -1;
+        result = (_currPlayer == 1) ? GameResult::RedWin
+                                    : GameResult::BlackWin;
     }
     return result;
 }
