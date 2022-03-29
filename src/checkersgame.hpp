@@ -9,6 +9,7 @@
 
 enum class PlayerType {
     Human,
+    Random,
     MiniMax,
     AlphaBeta
 };
@@ -27,6 +28,7 @@ private:
 
     std::optional<Move> getMoveIfLegal(Board::Tile prevSelected,
                                        Board::Tile currSelected) const;
+    std::optional<Move> getRandomMove() const;
     bool isOver() const;
 
     void changeTurn();

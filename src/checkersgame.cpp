@@ -4,6 +4,7 @@
 #include "searching.hpp"
 #include <optional>
 using std::optional;
+#include <random>
 
 
 void CheckersGame::setRedPlayer(PlayerType type) {
@@ -35,6 +36,9 @@ void CheckersGame::attemptMove() {
         case PlayerType::Human:
             potentialMove = getMoveIfLegal(_display->getPrevSelected(),
                                            _display->getCurrSelected());
+            break;
+        case PlayerType::Random:
+            potentialMove = getRandomMove();
             break;
         case PlayerType::MiniMax:
             potentialMove = miniMax(_board, _currPlayer, 7);
@@ -69,6 +73,17 @@ std::optional<Move> CheckersGame::getMoveIfLegal(
         return {};
     }
     return *it;
+}
+
+std::optional<Move> CheckersGame::getRandomMove() const {
+    static std::random_device rd{};
+    static std::mt19937 gen(rd());
+    auto legalMoves = generateMoves(_board, _currPlayer);
+    if (legalMoves.empty()) {
+        return {};
+    }
+    std::uniform_int_distribution<std::size_t> dist(0ull, legalMoves.size() - 1);
+    return legalMoves[dist(gen)];
 }
 
 void CheckersGame::changeTurn() {
