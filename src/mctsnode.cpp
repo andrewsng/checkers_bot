@@ -1,4 +1,5 @@
 #include "mctsnode.hpp"
+#include "checkersgame.hpp"
 #include <algorithm>
 using std::max_element;
 #include <memory>
@@ -33,7 +34,11 @@ MCTSNode *MCTSNode::expandLeaf() {
 }
 
 int MCTSNode::rollout() const {
-    return 0;
+    CheckersGame simulation(_board, _player);
+    simulation.setRedPlayer(PlayerType::Random);
+    simulation.setBlackPlayer(PlayerType::Random);
+    simulation.runGame();
+    return simulation.result();
 }
 
 void MCTSNode::propagateResult(int result) const {
