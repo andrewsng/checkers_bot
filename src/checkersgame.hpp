@@ -31,6 +31,7 @@ public:
     CheckersGame(Board board, int currPlayer);
     void setRedPlayer(PlayerType type);
     void setBlackPlayer(PlayerType type);
+    void setTimeLimitInSec(double timeLimitInSec);
     void createDisplay();
     void threeMoveStart();
     void runGame();
@@ -52,6 +53,7 @@ private:
 
     Board _board{};
     int _currPlayer{0};
+    double _timeLimitInSec{5.0};
     PlayerType _redPlayerType{PlayerType::Human};
     PlayerType _blackPlayerType{PlayerType::Human};
     std::unique_ptr<CheckersDisplay> _display{};//{1000, 1000, "Checkers"};

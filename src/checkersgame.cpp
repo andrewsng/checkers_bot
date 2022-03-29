@@ -19,6 +19,10 @@ void CheckersGame::setBlackPlayer(PlayerType type) {
     _blackPlayerType = type;
 }
 
+void CheckersGame::setTimeLimitInSec(double timeLimitInSec) {
+    _timeLimitInSec = timeLimitInSec;
+}
+
 void CheckersGame::createDisplay() {
     _display = std::make_unique<CheckersDisplay>(1000, 1000, "Checkers");
 }
@@ -70,10 +74,10 @@ void CheckersGame::attemptMove() {
             potentialMove = miniMax(_board, _currPlayer, 7);
             break;
         case PlayerType::AlphaBeta:
-            potentialMove = alphaBetaIDS(_board, _currPlayer, 12, 1.0);
+            potentialMove = alphaBetaIDS(_board, _currPlayer, 12, _timeLimitInSec);
             break;
         case PlayerType::MCTS:
-            potentialMove = monteCarlo(_board, _currPlayer, 1000000, 1.0);
+            potentialMove = monteCarlo(_board, _currPlayer, 1000000, _timeLimitInSec);
             break;
     }
     if (potentialMove) {
