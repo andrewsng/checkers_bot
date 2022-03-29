@@ -1,5 +1,6 @@
 #include "searching.hpp"
 #include "movegen.hpp"
+#include "mctsnode.hpp"
 #include <iostream>
 #include <iomanip>
 #include <utility>
@@ -162,15 +163,13 @@ double evalBoard(const Board &board, int player) {
 }
 
 optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
-    MCTSNode treeRoot{board};
-    auto result = rollout(treeRoot);
-    propagateResult(result, treeRoot);
+    MCTSNode treeRoot{};
     int iters = 0;
     while (iters < maxIters) {
         auto leafToExpand = treeRoot.selectLeaf();
-        auto childToSimulate = leafToExpand.expandLeaf();
-        auto result = childToSimulate.rollout();
-        childToSimulate.propagateResult(result);
+        auto childToSimulate = leafToExpand->expandLeaf();
+        auto result = childToSimulate->rollout();
+        childToSimulate->propagateResult(result);
     }
 
     return {};

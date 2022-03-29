@@ -5,6 +5,7 @@ add_library(Checkers
     checkersgame.cpp checkersgame.hpp
     checkersdisplay.cpp checkersdisplay.hpp
     searching.cpp searching.hpp
+    mctsnode.cpp mctsnode.hpp
 )
 target_link_libraries(Checkers sfml-graphics)
 
