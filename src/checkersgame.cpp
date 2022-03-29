@@ -51,7 +51,7 @@ void CheckersGame::attemptMove() {
 }
 
 bool CheckersGame::isOver() const {
-    return !_display || !_display.isOpen();
+    return !_display || !_display->isOpen();
 }
 
 std::optional<Move> CheckersGame::getMoveIfLegal(
