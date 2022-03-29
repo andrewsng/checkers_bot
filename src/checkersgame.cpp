@@ -7,6 +7,10 @@ using std::optional;
 #include <random>
 
 
+CheckersGame::CheckersGame(Board board, int currPlayer)
+    :_board(board), _currPlayer(currPlayer)
+{}
+
 void CheckersGame::setRedPlayer(PlayerType type) {
     _redPlayerType = type;
 }
@@ -21,7 +25,7 @@ void CheckersGame::createDisplay() {
 
 void CheckersGame::runGame() {
     displayBoard();
-    while (!isOver()) {
+    while (!isGameOver()) {
         handleInputs();
         attemptMove();
         displayBoard();
@@ -54,8 +58,16 @@ void CheckersGame::attemptMove() {
     }
 }
 
-bool CheckersGame::isOver() const {
-    return !_display || !_display->isOpen();
+int CheckersGame::result() const {
+    return 0;
+}
+
+bool CheckersGame::isGameOver() const {
+    return !isDisplayOpen();
+}
+
+bool CheckersGame::isDisplayOpen() const {
+    return _display->isOpen();
 }
 
 std::optional<Move> CheckersGame::getMoveIfLegal(

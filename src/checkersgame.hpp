@@ -18,18 +18,22 @@ class CheckersGame {
 
 public:
 
+    CheckersGame() = default;
+    CheckersGame(Board board, int currPlayer);
     void setRedPlayer(PlayerType type);
     void setBlackPlayer(PlayerType type);
     void createDisplay();
     void runGame();
     void attemptMove();
+    int result() const;
 
 private:
 
+    bool isGameOver() const;
+    bool isDisplayOpen() const;
     std::optional<Move> getMoveIfLegal(Board::Tile prevSelected,
                                        Board::Tile currSelected) const;
     std::optional<Move> getRandomMove() const;
-    bool isOver() const;
 
     void changeTurn();
     void displayBoard();
