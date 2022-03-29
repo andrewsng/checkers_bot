@@ -14,6 +14,10 @@ void CheckersGame::setBlackPlayer(PlayerType type) {
     _blackPlayerType = type;
 }
 
+void CheckersGame::createDisplay() {
+    _display = std::make_unique<CheckersDisplay>(1000, 1000, "Checkers");
+}
+
 void CheckersGame::runGame() {
     displayBoard();
     while (!isOver()) {
@@ -29,8 +33,8 @@ void CheckersGame::attemptMove() {
     optional<Move> potentialMove{};
     switch (currPlayerType) {
         case PlayerType::Human:
-            potentialMove = getMoveIfLegal(_display.getPrevSelected(),
-                                           _display.getCurrSelected());
+            potentialMove = getMoveIfLegal(_display->getPrevSelected(),
+                                           _display->getCurrSelected());
             break;
         case PlayerType::MiniMax:
             potentialMove = miniMax(_board, _currPlayer, 7);
@@ -42,13 +46,12 @@ void CheckersGame::attemptMove() {
     if (potentialMove) {
         _board.makeMove(*potentialMove, _currPlayer);
         changeTurn();
-        _display.resetSelected();
-        _display.setPrevMove(*potentialMove);
+        resetDisplay(*potentialMove);
     }
 }
 
 bool CheckersGame::isOver() const {
-    return !_display.isOpen();
+    return !_display || !_display.isOpen();
 }
 
 std::optional<Move> CheckersGame::getMoveIfLegal(
@@ -73,9 +76,20 @@ void CheckersGame::changeTurn() {
 }
 
 void CheckersGame::displayBoard() {
-    _display.drawBoard(_board, 0, _currPlayer);
+    if (_display) {
+        _display->drawBoard(_board, 0, _currPlayer);
+    }
 }
 
 void CheckersGame::handleInputs() {
-    _display.handleInputs(_board, 0);
+    if (_display) {
+        _display->handleInputs(_board, 0);
+    }
+}
+
+void CheckersGame::resetDisplay(const Move &prevMove) {
+    if (_display) {
+        _display->resetSelected();
+        _display->setPrevMove(prevMove);
+    }
 }

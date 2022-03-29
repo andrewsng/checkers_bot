@@ -12,7 +12,6 @@ class MCTSNode {
 
 public:
 
-    MCTSNode() = default;
     MCTSNode(Board board, int player);
     MCTSNode *selectLeaf();
     MCTSNode *expandLeaf();
@@ -24,7 +23,7 @@ private:
     double UCTValue() const;
 
     Board _board{};
-    int _player{0};
+    int _player{};
     std::vector<Move> _unvisited{generateMoves(_board, _player)};
     std::vector<std::shared_ptr<MCTSNode>> _children{};
 

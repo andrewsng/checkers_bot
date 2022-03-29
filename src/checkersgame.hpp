@@ -3,6 +3,8 @@
 
 #include "board.hpp"
 #include "checkersdisplay.hpp"
+#include <string>
+#include <memory>
 
 
 enum class PlayerType {
@@ -17,6 +19,7 @@ public:
 
     void setRedPlayer(PlayerType type);
     void setBlackPlayer(PlayerType type);
+    void createDisplay();
     void runGame();
     void attemptMove();
 
@@ -29,12 +32,13 @@ private:
     void changeTurn();
     void displayBoard();
     void handleInputs();
+    void resetDisplay(const Move &prevMove);
 
     Board _board{};
-    CheckersDisplay _display{1000, 1000, "Checkers"};
     int _currPlayer{0};
     PlayerType _redPlayerType{PlayerType::Human};
     PlayerType _blackPlayerType{PlayerType::Human};
+    std::unique_ptr<CheckersDisplay> _display{};//{1000, 1000, "Checkers"};
 
 };
 
