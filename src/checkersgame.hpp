@@ -3,8 +3,10 @@
 
 #include "board.hpp"
 #include "checkersdisplay.hpp"
+#include <vector>
 #include <string>
 #include <memory>
+#include <utility>
 
 
 enum class PlayerType {
@@ -45,6 +47,7 @@ private:
     PlayerType _redPlayerType{PlayerType::Human};
     PlayerType _blackPlayerType{PlayerType::Human};
     std::unique_ptr<CheckersDisplay> _display{};//{1000, 1000, "Checkers"};
+    std::vector<std::pair<Move, int>> _moveHistory{};
 
 };
 

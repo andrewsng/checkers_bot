@@ -27,7 +27,15 @@ void CheckersGame::runGame() {
     displayBoard();
     while (!isGameOver()) {
         handleInputs();
+        if (_display && !isDisplayOpen()) {
+            break;
+        }
         attemptMove();
+        displayBoard();
+    }
+    result();
+    while (_display && isDisplayOpen()) {
+        handleInputs();
         displayBoard();
     }
 }
@@ -53,21 +61,32 @@ void CheckersGame::attemptMove() {
     }
     if (potentialMove) {
         _board.makeMove(*potentialMove, _currPlayer);
+        _moveHistory.push_back({*potentialMove, _currPlayer});
         changeTurn();
         resetDisplay(*potentialMove);
     }
 }
 
 int CheckersGame::result() const {
-    return 0;
+    int result{};
+    if (_moveHistory.size() > 1000) {
+        result = 0;
+    } else if (generateMoves(_board, _currPlayer).empty()) {
+        result = (_currPlayer == 1) ? 1 : -1;
+    }
+    return result;
 }
 
 bool CheckersGame::isGameOver() const {
-    return !isDisplayOpen();
+    auto legalMoves = generateMoves(_board, _currPlayer);
+    return legalMoves.empty() || (_moveHistory.size() > 1000);
 }
 
 bool CheckersGame::isDisplayOpen() const {
-    return _display->isOpen();
+    if (_display) {
+        return _display->isOpen();
+    }
+    return false;
 }
 
 std::optional<Move> CheckersGame::getMoveIfLegal(
