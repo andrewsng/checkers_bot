@@ -84,8 +84,7 @@ optional<Move> alphaBetaIDS(const Board &board, int player, int maxDepth, double
         ++depth;
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsedSec = end - start;
-        std::cout << elapsedSec.count() << "\n";
-        if (elapsedSec.count() >= timeLimitInSec * 0.75) {
+        if (elapsedSec.count() >= timeLimitInSec * 0.5) {
             break;
         }
     }
@@ -180,9 +179,10 @@ double evalBoard(const Board &board, int player) {
     return score;
 }
 
-optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
+optional<Move> monteCarlo(const Board &board, int player, int maxIters, double timeLimitInSec) {
     MCTSNode treeRoot{board, player};
     int iters = 0;
+    auto start = std::chrono::steady_clock::now();
     while (iters < maxIters) {
         auto [leafToExpand, isTrueLeaf] = treeRoot.selectLeaf();
         MCTSNode *childToSimulate = leafToExpand;
@@ -192,6 +192,11 @@ optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
         auto result = childToSimulate->rollout();
         childToSimulate->propagateResult(result);
         ++iters;
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsedSec = end - start;
+        if (elapsedSec.count() >= timeLimitInSec) {
+            break;
+        }
     }
     auto count = treeRoot.countNodes();
     std::cout << "Monte Carlo Board Count: " << std::right << std::setw(12) << count << "\n";

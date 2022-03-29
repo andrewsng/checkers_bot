@@ -59,7 +59,7 @@ void CheckersGame::attemptMove() {
             potentialMove = alphaBetaIDS(_board, _currPlayer, 12, 1.0);
             break;
         case PlayerType::MCTS:
-            potentialMove = monteCarlo(_board, _currPlayer, 100000);
+            potentialMove = monteCarlo(_board, _currPlayer, 1000000, 1.0);
             break;
     }
     if (potentialMove) {
