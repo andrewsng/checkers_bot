@@ -166,11 +166,16 @@ optional<Move> monteCarlo(const Board &board, int player, int maxIters) {
     MCTSNode treeRoot{board, player};
     int iters = 0;
     while (iters < maxIters) {
-        auto leafToExpand = treeRoot.selectLeaf();
-        auto childToSimulate = leafToExpand->expandLeaf();
+        auto [leafToExpand, isTrueLeaf] = treeRoot.selectLeaf();
+        MCTSNode *childToSimulate = leafToExpand;
+        if (!isTrueLeaf) {
+            childToSimulate = leafToExpand->expandLeaf();
+        }
         auto result = childToSimulate->rollout();
         childToSimulate->propagateResult(result);
+        ++iters;
     }
-
-    return {};
+    auto count = treeRoot.countNodes();
+    std::cout << "Monte Carlo Board Count: " << std::right << std::setw(12) << count << "\n";
+    return treeRoot.moveWithMostRollouts();
 }
