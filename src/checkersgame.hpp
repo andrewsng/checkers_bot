@@ -32,6 +32,7 @@ public:
     void setRedPlayer(PlayerType type);
     void setBlackPlayer(PlayerType type);
     void createDisplay();
+    void threeMoveStart();
     void runGame();
     void attemptMove();
     GameResult result() const;

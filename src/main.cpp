@@ -8,9 +8,10 @@
 
 int main(int argc, char *argv[]) {
     CheckersGame game{};
-    game.setRedPlayer(PlayerType::MiniMax);
+    game.setRedPlayer(PlayerType::MCTS);
     game.setBlackPlayer(PlayerType::AlphaBeta);
     game.createDisplay();
+    game.threeMoveStart();
     game.runGame();
     return 0;
 }

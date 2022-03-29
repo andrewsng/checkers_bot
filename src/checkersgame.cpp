@@ -23,6 +23,20 @@ void CheckersGame::createDisplay() {
     _display = std::make_unique<CheckersDisplay>(1000, 1000, "Checkers");
 }
 
+void CheckersGame::threeMoveStart() {
+    _board = Board{};
+    _currPlayer = 0;
+    auto temp1 = _redPlayerType;
+    auto temp2 = _blackPlayerType;
+    setRedPlayer(PlayerType::Random);
+    setBlackPlayer(PlayerType::Random);
+    attemptMove();
+    attemptMove();
+    attemptMove();
+    setRedPlayer(temp1);
+    setBlackPlayer(temp2);
+}
+
 void CheckersGame::runGame() {
     displayBoard();
     while (!isGameOver()) {
