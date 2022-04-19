@@ -1,16 +1,10 @@
 #include "checkersgame.hpp"
-#include "movegen.hpp"
-#include "searching.hpp"
-#include <iostream>
-#include <random>
-#include <cmath>
-#include <SFML/Graphics.hpp>
 
 int main(int argc, char *argv[]) {
     CheckersGame game{};
     game.setRedPlayer(PlayerType::MCTS);
     game.setBlackPlayer(PlayerType::AlphaBeta);
-    game.setTimeLimitInSec(1.0);
+    game.setTimeLimitInSec(5.0);
     game.createDisplay();
     game.threeMoveStart();
     game.runGame();

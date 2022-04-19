@@ -11,3 +11,6 @@ target_link_libraries(Checkers sfml-graphics)
 
 add_executable(CheckersBot main.cpp)
 target_link_libraries(CheckersBot Checkers)
+
+add_executable(NeuralNetworks nnmain.cpp)
+target_link_libraries(NeuralNetworks Checkers)
