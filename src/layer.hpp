@@ -21,8 +21,6 @@ public:
     std::vector<data_type> _bias;
     std::function<float(float)> _activation;
 
-private:
-
     void computeOutput(const std::vector<data_type> &prevLayer) {
         for (std::size_t i = 0; i < _data.size(); ++i) {
             float output = _bias[i];
@@ -38,6 +36,8 @@ private:
             std::cout << val << " ";
         }
     }
+
+private:
 
 };
 
