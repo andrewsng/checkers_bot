@@ -7,6 +7,7 @@ add_library(Checkers
     searching.cpp searching.hpp
     mctsnode.cpp mctsnode.hpp
     layer.hpp layer.cpp
+    network.hpp network.cpp
 )
 target_link_libraries(Checkers sfml-graphics)
 

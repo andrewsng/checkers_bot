@@ -4,10 +4,9 @@
 
 int main(int argc, char *argv[]) {
     Network n{};
+    n.initExample();
     n.forwardPropagate();
     std::cout << "Network results:\n";
-    for (const auto &o : n._layers.back()._data) {
-        std::cout << o << " ";
-    }
+    n.printOutput();
     std::cout << "\n";
 }
