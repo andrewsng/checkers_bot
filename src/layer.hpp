@@ -17,6 +17,7 @@ public:
 
     DenseLayer(size_type size, size_type prevSize, func_type activation);
     void printData() const;
+    size_type size() const;
     void setData(const std::vector<data_type> &newData);
     void setWeights(const std::vector<std::vector<data_type>> &newWeights);
     void setBias(const std::vector<data_type> &newBias);

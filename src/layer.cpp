@@ -15,6 +15,10 @@ void DenseLayer::printData() const {
     }
 }
 
+DenseLayer::size_type DenseLayer::size() const {
+    return _data.size();
+}
+
 void DenseLayer::setData(const vector<data_type> &newData) {
     for (size_type i = 0; i < _data.size(); ++i) {
         _data[i] = newData[i];
