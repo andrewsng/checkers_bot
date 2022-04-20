@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <cstddef>
 
 
 class DenseLayer {
@@ -11,8 +12,10 @@ class DenseLayer {
 public:
 
     using data_type = float;
+    using size_type = std::size_t;
+    using func_type = std::function<float(float)>;
 
-    DenseLayer(std::size_t size, std::size_t prevSize, std::function<float(float)> activation);
+    DenseLayer(size_type size, size_type prevSize, func_type activation);
     void printData() const;
     void setData(const std::vector<data_type> &newData);
     void setWeights(const std::vector<std::vector<data_type>> &newWeights);
@@ -24,7 +27,7 @@ private:
 
     std::vector<std::vector<data_type>> _weight;
     std::vector<data_type> _bias;
-    std::function<float(float)> _activation;
+    func_type _activation;
 
 };
 
