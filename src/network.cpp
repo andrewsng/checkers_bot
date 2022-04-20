@@ -2,9 +2,7 @@
 
 
 void Network::printOutput() const {
-    for (const auto &val : _layers.back()._data) {
-        std::cout << val << " ";
-    }
+    _layers.back().printData();
 }
 void Network::addInput(size_type size) {
     _layers.emplace(_layers.begin(), size, 0, ReLU);
@@ -37,18 +35,11 @@ void Network::initExample() {
 }
 
 void Network::forwardPropagate() {
-    _layers[0].printData();
+    _layers.begin()->printData();
     std::cout << "\n";
-
-    _layers[1].computeOutput(_layers[0]._data);
-    _layers[1].printData();
-    std::cout << "\n";
-
-    _layers[2].computeOutput(_layers[1]._data);
-    _layers[2].printData();
-    std::cout << "\n";
-
-    _layers[3].computeOutput(_layers[2]._data);
-    _layers[3].printData();
-    std::cout << "\n";
+    for (auto it =  _layers.begin() + 1; it != _layers.end(); ++it) {
+        it->computeOutput(*(it - 1));
+        it->printData();
+        std::cout << "\n";
+    }
 }

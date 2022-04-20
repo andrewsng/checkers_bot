@@ -21,11 +21,11 @@ public:
     void setData(const std::vector<data_type> &newData);
     void setWeights(const std::vector<std::vector<data_type>> &newWeights);
     void setBias(const std::vector<data_type> &newBias);
-    void computeOutput(const std::vector<data_type> &prevLayer);
-    std::vector<data_type> _data;
+    void computeOutput(const DenseLayer &prevLayer);
 
 private:
 
+    std::vector<data_type> _data;
     std::vector<std::vector<data_type>> _weight;
     std::vector<data_type> _bias;
     func_type _activation;

@@ -35,11 +35,11 @@ void DenseLayer::setBias(const vector<data_type> &newBias) {
     }
 }
 
-void DenseLayer::computeOutput(const vector<data_type> &prevLayer) {
+void DenseLayer::computeOutput(const DenseLayer &prevLayer) {
     for (size_type i = 0; i < _data.size(); ++i) {
         float output = _bias[i];
         for (size_type j = 0; j < prevLayer.size(); ++j) {
-            output += prevLayer[j] * _weight[i][j];
+            output += prevLayer._data[j] * _weight[i][j];
         }
         _data[i] = _activation(output);
     }
