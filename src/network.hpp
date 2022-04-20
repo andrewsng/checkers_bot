@@ -1,6 +1,7 @@
 #ifndef NETWORK_HPP
 #define NETWORK_HPP
 
+#include "layer.hpp"
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -9,55 +10,44 @@
 class Network {
 
 public:
+
+    Network()
+        :_layers(3, DenseLayer(0, 0, ReLU)) {
+        _layers[0] = DenseLayer(4, 2, ReLU);
+        _layers[0]._weight = { { 0.25f, 0.5f },
+                               { 0.5f, 0.75f },
+                               { 0.75f, 1.0f },
+                               { 1.0f, 1.25f } };
+        _layers[0]._bias = { 0.25f, 0.5f, 0.75f, 1.0f };
+
+        _layers[1] = DenseLayer(3, 4, ReLU);
+        _layers[1]._weight = { { 0.25f, 0.5f, 0.75f, 1.0f },
+                               { 0.5f, 0.75f, 1.0f, 1.25f },
+                               { 0.75f, 1.0f, 1.25f, 1.5f } };
+        _layers[1]._bias = { 1.25f, 1.5f, 1.75f };
+
+        _layers[2] = DenseLayer(1, 3, ReLU);
+        _layers[2]._weight = { { 0.25f, 0.5f, 0.75f } };
+        _layers[2]._bias =  { 2.0 };
+    }
     
     std::vector<float> _input{ 0.5f, 1.0f };
-
-    std::vector<std::vector<float>> _weights1{ { 0.25f, 0.5f },
-                                               { 0.5f, 0.75f },
-                                               { 0.75f, 1.0f },
-                                               { 1.0f, 1.25f } };
-    std::vector<float> _bias1{ 0.25f, 0.5f, 0.75f, 1.0f };
-    std::vector<float> _hidden1 = std::vector<float>(4, 0.0f);
-
-    std::vector<std::vector<float>> _weights2{ { 0.25f, 0.5f, 0.75f, 1.0f },
-                                               { 0.5f, 0.75f, 1.0f, 1.25f },
-                                               { 0.75f, 1.0f, 1.25f, 1.5f } };
-    std::vector<float> _bias2{ 1.25f, 1.5f, 1.75f };
-    std::vector<float> _hidden2 = std::vector<float>(3, 0.0f);
-
-    std::vector<std::vector<float>> _weights3{ { 0.25f, 0.5f, 0.75f } };
-    std::vector<float> _bias3{ 2.0 };
-    std::vector<float> _output = std::vector<float>(1, 0.0f);
+    std::vector<DenseLayer> _layers{};
 
     void forwardPropagate() {
         printVector(_input);
         std::cout << "\n";
-        for (std::size_t i = 0; i < _hidden1.size(); ++i) {
-            float output = _bias1[i];
-            for (std::size_t j = 0; j < _input.size(); ++j) {
-                output += _input[j] * _weights1[i][j];
-            }
-            _hidden1[i] = ReLU(output);
-        }
-        printVector(_hidden1);
+
+        _layers[0].computeOutput(_input);
+        _layers[0].print();
         std::cout << "\n";
-        for (std::size_t i = 0; i < _hidden2.size(); ++i) {
-            float output = _bias2[i];
-            for (std::size_t j = 0; j < _hidden1.size(); ++j) {
-                output += _hidden1[j] * _weights2[i][j];
-            }
-            _hidden2[i] = ReLU(output);
-        }
-        printVector(_hidden2);
+
+        _layers[1].computeOutput(_layers[0]._data);
+        _layers[1].print();
         std::cout << "\n";
-        for (std::size_t i = 0; i < _output.size(); ++i) {
-            float output = _bias3[i];
-            for (std::size_t j = 0; j < _hidden2.size(); ++j) {
-                output += _hidden2[j] * _weights3[i][j];
-            }
-            _output[i] = ReLU(output);
-        }
-        printVector(_output);
+
+        _layers[2].computeOutput(_layers[1]._data);
+        _layers[2].print();
         std::cout << "\n";
     }
 
@@ -69,7 +59,7 @@ private:
         }
     }
 
-    float ReLU(float x) {
+    static float ReLU(float x) {
         return std::max(0.0f, x);
     }
 
