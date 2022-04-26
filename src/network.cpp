@@ -12,6 +12,14 @@ void Network::addLayer(size_type size, DenseLayer::func_type activation) {
     _layers.emplace(_layers.end(), size, _layers.back().size(), ReLU);
 }
 
+void Network::setInput(const std::vector<data_type> &input) {
+    if (_layers.front().size() != input.size()) {
+        std::cerr << "ERROR - Network::setInput - Incorrect input size" << std::endl;
+        return;
+    }
+    _layers.front().setData(input);
+}
+
 void Network::initExample() {
     addInput(2);
     _layers.back().setData({ 0.5f, 1.0f });

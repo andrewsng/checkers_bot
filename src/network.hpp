@@ -11,12 +11,14 @@ class Network {
 
 public:
 
+    using data_type = DenseLayer::data_type;
     using size_type = DenseLayer::size_type;
 
     Network() = default;
     void printOutput() const;
     void addInput(size_type size);
     void addLayer(size_type size, DenseLayer::func_type activation);
+    void setInput(const std::vector<data_type> &input);
     void initExample();
     void forwardPropagate();
 
