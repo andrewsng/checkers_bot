@@ -25,6 +25,7 @@ void DenseLayer::printData() const {
     for (const auto &val : _data) {
         std::cout << val << " ";
     }
+    std::cout << "\n";
 }
 
 void DenseLayer::printWeights() const {
@@ -35,11 +36,13 @@ void DenseLayer::printWeights() const {
         }
         std::cout << "} ";
     }
+    std::cout << "\n\n";
     std::cout << "{ ";
     for (const auto &b : _bias) {
         std::cout << b << " ";
     }
     std::cout << "} ";
+    std::cout << "\n";
 }
 
 DenseLayer::size_type DenseLayer::size() const {

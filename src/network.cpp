@@ -50,11 +50,7 @@ void Network::initExample() {
 }
 
 void Network::forwardPropagate() {
-    _layers.begin()->printData();
-    std::cout << "\n";
     for (auto it =  _layers.begin() + 1; it != _layers.end(); ++it) {
         it->computeOutput(*(it - 1));
-        it->printData();
-        std::cout << "\n";
     }
 }

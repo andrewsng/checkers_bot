@@ -30,6 +30,8 @@ void CheckersGame::createDisplay() {
 void CheckersGame::initializeNetwork() {
     Network network{};
     network.addInput(32);
+    network.addLayer(40, hyperbolicTangent, randomUniform(-0.2f, 0.2f));
+    network.addLayer(10, hyperbolicTangent, randomUniform(-0.2f, 0.2f));
     network.addLayer(1, hyperbolicTangent, randomUniform(-0.2f, 0.2f));
     _network = network;
 }
@@ -87,9 +89,10 @@ void CheckersGame::attemptMove() {
             potentialMove = monteCarlo(_board, _currPlayer, 1000000, _timeLimitInSec);
             break;
         case PlayerType::NeuralNetwork:
-            potentialMove = alphaBetaIDS(_board, _currPlayer, 6, _timeLimitInSec,
+            potentialMove = alphaBetaIDS(_board, _currPlayer, 12, _timeLimitInSec,
                     [&](const Board &board, int player) {
-                        _network.setInput(board.getEncoding(1.5f));
+                        float kingValue = 1.5f;
+                        _network.setInput(board.getEncoding(kingValue));
                         _network.forwardPropagate();
                         float ret = _network.getOutput()[0];
                         ret = (player == 0) ? ret : -ret;
