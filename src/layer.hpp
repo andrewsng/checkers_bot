@@ -13,9 +13,11 @@ public:
 
     using data_type = float;
     using size_type = std::size_t;
-    using func_type = std::function<float(float)>;
+    using acti_func = std::function<data_type(data_type)>;
+    using init_func = std::function<data_type()>;
 
-    DenseLayer(size_type size, size_type prevSize, func_type activation);
+    DenseLayer(size_type size, size_type prevSize, acti_func activation,
+            init_func initializer);
     void printData() const;
     size_type size() const;
     void setData(const std::vector<data_type> &newData);
@@ -28,7 +30,7 @@ private:
     std::vector<data_type> _data;
     std::vector<std::vector<data_type>> _weight;
     std::vector<data_type> _bias;
-    func_type _activation;
+    acti_func _activation;
 
 };
 

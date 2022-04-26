@@ -2,6 +2,7 @@
 #define NETWORK_HPP
 
 #include "layer.hpp"
+#include "initializer.hpp"
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -17,16 +18,17 @@ public:
     Network() = default;
     void printOutput() const;
     void addInput(size_type size);
-    void addLayer(size_type size, DenseLayer::func_type activation);
+    void addLayer(size_type size, DenseLayer::acti_func activation,
+            DenseLayer::init_func initializer = zeros);
     void setInput(const std::vector<data_type> &input);
     void initExample();
     void forwardPropagate();
 
-private:
-
     static float ReLU(float x) {
         return std::max(0.0f, x);
     }
+
+private:
 
     std::vector<DenseLayer> _layers{};
 

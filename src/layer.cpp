@@ -1,12 +1,21 @@
 #include "layer.hpp"
 #include <vector>
 using std::vector;
+#include <algorithm>
 
 
-DenseLayer::DenseLayer(size_type size, size_type prevSize, func_type activation)
+DenseLayer::DenseLayer(size_type size, size_type prevSize, acti_func activation,
+        init_func initializer)
     :_data(size, 0.0f), _weight(size, vector<data_type>(prevSize, 0.0f)),
      _bias(size, 0.0f), _activation(activation)
-{}
+{
+    if (prevSize > 0) {
+        for (auto &w : _weight) {
+            std::generate(w.begin(), w.end(), initializer);
+        }
+        std::generate(_bias.begin(), _bias.end(), initializer);
+    }
+}
 
 
 void DenseLayer::printData() const {

@@ -4,7 +4,10 @@
 
 int main(int argc, char *argv[]) {
     Network n{};
-    n.initExample();
+    // n.initExample();
+    n.addInput(3);
+    n.addLayer(4, Network::ReLU);
+    n.addLayer(1, Network::ReLU);
     n.forwardPropagate();
     std::cout << "Network results:\n";
     n.printOutput();

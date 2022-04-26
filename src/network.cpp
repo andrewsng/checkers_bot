@@ -5,11 +5,12 @@ void Network::printOutput() const {
     _layers.back().printData();
 }
 void Network::addInput(size_type size) {
-    _layers.emplace(_layers.begin(), size, 0, ReLU);
+    _layers.emplace(_layers.begin(), size, 0, ReLU, zeros);
 }
 
-void Network::addLayer(size_type size, DenseLayer::func_type activation) {
-    _layers.emplace(_layers.end(), size, _layers.back().size(), ReLU);
+void Network::addLayer(size_type size, DenseLayer::acti_func activation,
+        DenseLayer::init_func initializer) {
+    _layers.emplace(_layers.end(), size, _layers.back().size(), activation, initializer);
 }
 
 void Network::setInput(const std::vector<data_type> &input) {
