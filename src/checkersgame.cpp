@@ -27,6 +27,13 @@ void CheckersGame::createDisplay() {
     _display = std::make_unique<CheckersDisplay>(1000, 1000, "Checkers");
 }
 
+void CheckersGame::initializeNetwork() {
+    Network network{};
+    network.addInput(32);
+    network.addLayer(1, hyperbolicTangent, randomUniform(-0.2f, 0.2f));
+    _network = network;
+}
+
 void CheckersGame::threeMoveStart() {
     _board = Board{};
     _currPlayer = 0;
@@ -79,6 +86,15 @@ void CheckersGame::attemptMove() {
         case PlayerType::MCTS:
             potentialMove = monteCarlo(_board, _currPlayer, 1000000, _timeLimitInSec);
             break;
+        case PlayerType::NeuralNetwork:
+            potentialMove = alphaBetaIDS(_board, _currPlayer, 6, _timeLimitInSec,
+                    [&](const Board &board, int player) {
+                        _network.setInput(board.getEncoding(1.5f));
+                        _network.forwardPropagate();
+                        float ret = _network.getOutput()[0];
+                        ret = (player == 0) ? ret : -ret;
+                        return static_cast<double>(ret);
+                    });
     }
     if (potentialMove) {
         _board.makeMove(*potentialMove, _currPlayer);

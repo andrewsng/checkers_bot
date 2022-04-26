@@ -3,6 +3,7 @@
 
 #include "board.hpp"
 #include "checkersdisplay.hpp"
+#include "network.hpp"
 #include <vector>
 #include <string>
 #include <memory>
@@ -14,7 +15,8 @@ enum class PlayerType {
     Random,
     MiniMax,
     AlphaBeta,
-    MCTS
+    MCTS,
+    NeuralNetwork
 };
 
 enum class GameResult {
@@ -33,6 +35,7 @@ public:
     void setBlackPlayer(PlayerType type);
     void setTimeLimitInSec(double timeLimitInSec);
     void createDisplay();
+    void initializeNetwork();
     void threeMoveStart();
     void runGame();
     void attemptMove();
@@ -58,6 +61,7 @@ private:
     PlayerType _blackPlayerType{PlayerType::Human};
     std::unique_ptr<CheckersDisplay> _display{};//{1000, 1000, "Checkers"};
     std::vector<std::pair<Move, int>> _moveHistory{};
+    Network _network{};
 
 };
 
