@@ -29,6 +29,28 @@ vector<Board::Tile> Board::getBlackPositions() const {
     return blackPositions;
 }
 
+vector<float> Board::getEncoding(float kingValue) const {
+    vector<float> encoding(32, 0.0f);
+    for (Tile i = 0; i < _numTiles; ++i) {
+        float val = 0.0f;
+        if (isRed(i)) {
+            val = 1.0f;
+        }
+        else {
+            val = -1.0f;
+        }
+        if (isKing(i)) {
+            val *= kingValue;
+        }
+        encoding[i] = val;
+    }
+    return encoding;
+}
+
+optional<Move> Board::getBotMove(int player) const {
+    return miniMax(*this, player, 8);
+}
+
 bool Board::onEvenRow(Tile tile) {
     return (tile / 4) % 2 == 0;
 }
@@ -85,10 +107,6 @@ bool Board::isPromotion(const Move &move, int player) const {
 
 char Board::symbolOn(Tile tile) const {
     return _data[tile];
-}
-
-optional<Move> Board::getBotMove(int player) const {
-    return miniMax(*this, player, 8);
 }
 
 void Board::makeMove(const Move &move, int player) {

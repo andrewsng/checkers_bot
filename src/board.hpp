@@ -20,6 +20,8 @@ public:
     Board() = default;
     std::vector<Tile> getRedPositions() const;
     std::vector<Tile> getBlackPositions() const;
+    std::vector<float> getEncoding(float kingValue) const;
+    std::optional<Move> getBotMove(int player) const;
     static bool onEvenRow(Tile tile);
     static bool onLeftSide(Tile tile);
     static bool onRightSide(Tile tile);
@@ -32,7 +34,6 @@ public:
     bool isPromotionRow(Tile tile, int player) const;
     bool isPromotion(const Move &move, int player) const;
     char symbolOn(Tile tile) const;
-    std::optional<Move> getBotMove(int player) const;
     void makeMove(const Move &move, int player);
 
 private:
