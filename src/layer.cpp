@@ -17,6 +17,9 @@ DenseLayer::DenseLayer(size_type size, size_type prevSize, acti_func activation,
     }
 }
 
+const std::vector<DenseLayer::data_type> &DenseLayer::getData() const {
+    return _data;
+}
 
 void DenseLayer::printData() const {
     for (const auto &val : _data) {

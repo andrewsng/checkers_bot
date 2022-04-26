@@ -5,6 +5,11 @@
 void Network::printOutput() const {
     _layers.back().printData();
 }
+
+const std::vector<Network::data_type> &Network::getOutput() const {
+    return _layers.back().getData();
+}
+
 void Network::addInput(size_type size) {
     _layers.emplace(_layers.begin(), size, 0, ReLU, zeros);
 }

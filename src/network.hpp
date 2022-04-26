@@ -16,6 +16,7 @@ public:
 
     Network() = default;
     void printOutput() const;
+    const std::vector<data_type> &getOutput() const;
     void addInput(size_type size);
     void addLayer(size_type size, DenseLayer::acti_func activation,
             DenseLayer::init_func initializer = zeros);

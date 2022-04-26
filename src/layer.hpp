@@ -18,6 +18,7 @@ public:
 
     DenseLayer(size_type size, size_type prevSize, acti_func activation,
             init_func initializer);
+    const std::vector<data_type> &getData() const;
     void printData() const;
     void printWeights() const;
     size_type size() const;
