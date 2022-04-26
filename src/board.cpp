@@ -36,7 +36,7 @@ vector<float> Board::getEncoding(float kingValue) const {
         if (isRed(i)) {
             val = 1.0f;
         }
-        else {
+        else if (isBlack(i)) {
             val = -1.0f;
         }
         if (isKing(i)) {
