@@ -2,10 +2,9 @@
 #define NETWORK_HPP
 
 #include "layer.hpp"
+#include "activation.hpp"
 #include "initializer.hpp"
 #include <vector>
-#include <iostream>
-#include <cmath>
 
 
 class Network {
@@ -23,10 +22,6 @@ public:
     void setInput(const std::vector<data_type> &input);
     void initExample();
     void forwardPropagate();
-
-    static float ReLU(float x) {
-        return std::max(0.0f, x);
-    }
 
 private:
 

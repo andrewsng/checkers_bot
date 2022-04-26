@@ -1,4 +1,5 @@
 #include "network.hpp"
+#include "activation.hpp"
 #include <iostream>
 
 
@@ -6,8 +7,8 @@ int main(int argc, char *argv[]) {
     Network n{};
     // n.initExample();
     n.addInput(3);
-    n.addLayer(4, Network::ReLU, randomUniform(-0.5f, 0.5f));
-    n.addLayer(1, Network::ReLU, randomUniform(-0.5f, 0.5f));
+    n.addLayer(4, hyperbolicTangent, randomUniform(-0.5f, 0.5f));
+    n.addLayer(1, hyperbolicTangent, randomUniform(-0.5f, 0.5f));
     n.forwardPropagate();
     std::cout << "Network results:\n";
     n.printOutput();

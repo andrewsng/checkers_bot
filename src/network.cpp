@@ -1,4 +1,5 @@
 #include "network.hpp"
+#include <iostream>
 
 
 void Network::printOutput() const {
