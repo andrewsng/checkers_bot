@@ -24,6 +24,21 @@ void DenseLayer::printData() const {
     }
 }
 
+void DenseLayer::printWeights() const {
+    for (const auto &weightVec : _weight) {
+        std::cout << "{ ";
+        for (const auto &w : weightVec) {
+            std::cout << w << " ";
+        }
+        std::cout << "} ";
+    }
+    std::cout << "{ ";
+    for (const auto &b : _bias) {
+        std::cout << b << " ";
+    }
+    std::cout << "} ";
+}
+
 DenseLayer::size_type DenseLayer::size() const {
     return _data.size();
 }
