@@ -50,5 +50,7 @@ private:
 
 };
 
+double evalBoard(const Board &board, int player);
+
 
 #endif  // BOARD_HPP
